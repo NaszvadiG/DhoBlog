@@ -1,48 +1,81 @@
-            <div class="navbar-default sidebar" role="navigation">
-                <div class="sidebar-nav navbar-collapse">
-                    <ul class="nav" id="side-menu">
-                        <li><a class="active" href="<?php echo base_url('admin')?>"><i
-								class="fa fa-dashboard"></i> Dashboard</a>
-                                <ul class="nav nav-second-level">
-								<li><a href="<?php echo base_url('admin')?>">Home</a></li>
-								<li><a href="<?php echo base_url('admin/update')?>">Update</a></li>
-							    </ul> <!-- /.nav-second-level --></li>
-						<li><a href="#"><i class="fa fa-list-alt"></i> Posts<span
-								class="fa arrow"></span></a>
-							<ul class="nav nav-second-level">
-								<li><a href="<?php echo base_url('admin/posts')?>">All Posts</a></li>
-								<li><a href="<?php echo base_url('admin/newpost')?>">Add New</a></li>
-							</ul> <!-- /.nav-second-level --></li>
-						<li><a href="#"><i class="fa fa-folder"></i> Categories<span
-								class="fa arrow"></span></a>
-							<ul class="nav nav-second-level">
-								<li><a href="<?php echo base_url('admin/categories')?>">All Categories</a></li>
-								<li><a href="<?php echo base_url('admin/newcategory')?>">Add New</a></li>
-							</ul> <!-- /.nav-second-level --></li>
-                        <li><a href="<?php echo base_url('admin/comments')?>"><i
-								class="fa fa-comments"></i> Comments</a></li>
-                        <li><a href="#"><i class="fa fa-users"></i> Users<span
-								class="fa arrow"></span></a>
-							<ul class="nav nav-second-level">
-								<li><a href="<?php echo base_url('admin/users')?>">All Users</a></li>
-								<li><a href="<?php echo base_url('admin/newuser')?>">Add New</a></li>
-                                <li><a href="<?php echo base_url('admin/profile')?>">Your Profile</a></li>
-							</ul> <!-- /.nav-second-level --></li>
-                        <li><a href="#"><i class="fa fa-magic"></i> Appearance<span
-								class="fa arrow"></span></a>
-							<ul class="nav nav-second-level">
-								<li><a href="<?php echo base_url('admin/frontend')?>">Frontend Themes</a></li>
-								<li><a href="<?php echo base_url('admin/backend')?>">Backend Themes</a></li>
-							</ul> <!-- /.nav-second-level --></li>
-                        <li><a href="#"><i class="fa fa-gear"></i> Settings<span
-								class="fa arrow"></span></a>
-							<ul class="nav nav-second-level">
-								<li><a href="<?php echo base_url('admin/general')?>">General</a></li>
-								<li><a href="<?php echo base_url('admin/permalinks')?>">Permalinks</a></li>
-							</ul> <!-- /.nav-second-level --></li>
-                    </ul>
-                </div>
-                <!-- /.sidebar-collapse -->
+    <div class="col-md-3">
+    <div class="sidebarpadding">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+            <div class="panel-title">
+                <i class="fa fa-dashboard"></i> Dashboard
             </div>
-            <!-- /.navbar-static-side -->
-        </nav>
+            </div>
+            <div class="list-group">
+                <a class="list-group-item" href="<?php echo base_url('admin')?>">Home</a>
+                <a class="list-group-item" href="<?php echo base_url('admin/update')?>">Update</a>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+            <div class="panel-title">
+                <i class="fa fa-list-alt"></i> Posts
+            </div>
+            </div>
+            <div class="list-group">
+                <a class="list-group-item" href="<?php echo base_url('admin/posts')?>">All Posts</a>
+			    <a class="list-group-item" href="<?php echo base_url('admin/newpost')?>">Add New</a>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+            <div class="panel-title">
+                <i class="fa fa-folder"></i> Categories
+            </div>
+            </div>
+            <div class="list-group">
+                <a class="list-group-item" href="<?php echo base_url('admin/categories')?>">All Categories</a>
+			    <a class="list-group-item" href="<?php echo base_url('admin/newcategory')?>">Add New</a>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+            <div class="panel-title">
+                <i class="fa fa-comments"></i> Comments
+            </div>
+            </div>
+            <div class="list-group">
+                <a class="list-group-item" href="<?php echo base_url('admin/comments')?>">All Comments</a>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+            <div class="panel-title">
+                <i class="fa fa-users"></i> Users
+            </div>
+            </div>
+            <div class="list-group">
+                <a class="list-group-item" href="<?php echo base_url('admin/users')?>">All Users</a>
+                <a class="list-group-item" href="<?php echo base_url('admin/newuser')?>">Add New</a>
+                <a class="list-group-item" href="<?php echo base_url('admin/profile')?>">Your Profile</a>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+            <div class="panel-title">
+                <i class="fa fa-magic"></i> Appearance
+            </div>
+            </div>
+            <div class="list-group">
+                <a class="list-group-item" href="<?php echo base_url('admin/frontend')?>">Frontend Themes</a>
+			    <a class="list-group-item" href="<?php echo base_url('admin/backend')?>">Backend Themes</a>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+            <div class="panel-title">
+                <i class="fa fa-gear"></i> Settings
+            </div>
+            </div>
+            <div class="list-group">
+                <a class="list-group-item" href="<?php echo base_url('admin/general')?>">General</a>
+				<a class="list-group-item" href="<?php echo base_url('admin/permalinks')?>">Permalinks</a>
+            </div>
+        </div>
+    </div>
+</div>

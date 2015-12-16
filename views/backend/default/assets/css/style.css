@@ -1,0 +1,26 @@
+.adminpadding {
+  padding-top: 30px;
+  padding-bottom: 30px;
+}
+.sidebarpadding {
+  padding-top: 40px;
+}
+.footerpadding {
+  padding-bottom: 30px;
+}
+footer p{
+    clear:left;
+    margin-bottom:0
+}
+.row-actions {
+	color: #ddd;
+	font-size: 13px;
+	visibility: hidden;
+	padding: 2px 0 0;
+}
+tr:hover .row-actions,
+.mobile .row-actions,
+.row-actions.visible,
+div.comment-item:hover .row-actions {
+	visibility: visible;
+}
