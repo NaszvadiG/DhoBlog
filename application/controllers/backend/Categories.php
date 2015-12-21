@@ -44,7 +44,7 @@ class Categories extends CI_Controller {
 	}
     public function editcategory($category_id){
         $data['title']="Edit Category";
-        $data['category']=$this->categories_model->get_category($category_id);
+        $data['category']=$this->categories_model->get_category_by_id($category_id);
 
         $validation_rules=array(
             array(

@@ -13,8 +13,8 @@ class Posts_model extends CI_Model {
             'field_title'=>'post_title',
             'field_slug'=>'post_slug'
         );
-        $this->load->library('slug',$config);
-        $this->load->library('permalinks');
+        $this->load->library(array('slug','permalinks'));
+        $this->slug->set_config($config);
     }
     public function add_post(){
 	    $data = array(
@@ -103,6 +103,33 @@ class Posts_model extends CI_Model {
         $result['post_permalink'] = $this->permalinks->get_post_permalinks($post->post_id,$post->post_date,$post->post_slug);
 		return $result;
 	}
+    public function get_posts_by_category($category_slug,$limit,$offset){
+	    $this->db->select('*');
+		$this->db->from('posts');
+		$this->db->join('category_relationships', 'posts.post_id = category_relationships.post_id');
+		$this->db->join('categories', 'category_relationships.category_id = categories.category_id');
+		$this->db->join('users','posts.user_id = users.user_id');
+		$this->db->where('posts.post_status', 'published');
+		$this->db->where('categories.category_slug', $category_slug);
+		$this->db->order_by('posts.post_id', 'DESC');
+        $this->db->limit($limit, $offset);
+		$query = $this->db->get();
+
+        if ($query->num_rows() > 0){
+    		$x = 0;
+    		foreach ( $query->result_array () as $row ) {
+    			$result [$x] ['post_id'] = $row ['post_id'];
+    			$result [$x] ['post_title'] = $row ['post_title'];
+                $result [$x] ['post_excerpt'] = $row ['post_excerpt'];
+                $result [$x] ['post_content'] = $row ['post_content'];
+    			$result [$x] ['post_date'] = unix_to_human_date($row ['post_date']);
+    			$result [$x] ['post_status'] = $row ['post_status'];
+                $result [$x] ['post_permalink'] = $this->permalinks->get_post_permalinks($row ['post_id'],$row ['post_date'],$row ['post_slug']);
+    			$x ++;
+    		}
+    		return $result;
+        }
+	}
 	public function get_posts(){
 	    $this->db->order_by('post_id', 'DESC');
 		$query = $this->db->get("posts");
@@ -123,6 +150,7 @@ class Posts_model extends CI_Model {
         }
 	}
     public function get_posts_limit($limit,$offset) {
+        $this->db->order_by('post_date', 'DESC');
         $this->db->limit($limit, $offset);
 		$query = $this->db->get("posts");
 		if ($query->num_rows() > 0){

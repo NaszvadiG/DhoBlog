@@ -56,7 +56,7 @@ class Posts extends CI_Controller {
     public function editpost($post_id){
         $data['title']="Edit Post";
         $data['categories']=$this->categories_model->get_categories();
-        $data['post']=$this->posts_model->get_post($post_id);
+        $data['post']=$this->posts_model->get_post_by_id($post_id);
         $data['post_categories']=$this->posts_model->get_post_categories($post_id);
         $validation_rules=array(
             array(
