@@ -15,7 +15,7 @@
     <div class="navbar navbar-default navbar-fixed-top">
       <div class="container">
         <div class="navbar-header">
-          <a href="<?php echo base_url('admin');?>" class="navbar-brand">Dashboard</a>
+          <a href="<?php echo base_url('dashboard');?>" class="navbar-brand">Dashboard</a>
           <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main">
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
@@ -45,7 +45,7 @@
             </li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
-            <li><a href="#">View Blog</a></li>
+            <li><a href="<?php echo base_url();?>">View Blog</a></li>
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Admin <i class="fa fa-caret-down"></i></a>
               <ul class="dropdown-menu">
