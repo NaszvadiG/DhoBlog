@@ -2,7 +2,6 @@
 /**
  * Themes Library
  *
- * @author Dhosoft Community
  * @author Mutasim Ridlo, S.Kom (http://www.ridho.id)
  * @copyright Copyright (c) 2015, Dhosoft (http://www.dhosoft.com)
  * @license http://opensource.org/licenses/MIT MIT License
@@ -12,20 +11,23 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Themes {
 
-    public function load_front_theme($theme,$part,$data){
-        $CI=& get_instance();
-        require_once("views/frontend/".$theme."/functions.php");
-        $function="theme_".$part;
-        foreach($function() as $func){
-                $CI->load->view ('frontend/default/'.$func,$data);
+    public function __construct(){
+		$this->CI =& get_instance();
+	}
+    public function get_default_theme(){
+		$theme=array(
+               "backend"=>"default",
+               "frontend"=>"default"
+        );
+		return $theme;
+	}
+    public function load($data=NULL,$admin=FALSE){
+        $theme=$this->get_default_theme();
+        if($admin==TRUE){
+            $this->CI->load->view('backend/'.$theme['backend'].'/layout', $data);
+        }else{
+            $this->CI->load->view('frontend/'.$theme['frontend'].'/layout', $data);
         }
-    }
-	public function load_back_theme($theme,$part,$data){
-	    $CI=& get_instance();
-        require_once("views/backend/".$theme."/functions.php");
-        $function="theme_".$part;
-        foreach($function() as $func){
-                $CI->load->view ('backend/default/'.$func,$data);
-        }
+
     }
 }
