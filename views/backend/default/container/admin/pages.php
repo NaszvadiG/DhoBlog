@@ -1,9 +1,9 @@
 <div class="col-md-9">
   <div class="page-header">
-    <h2 class="pull-left">All Posts</h2>
+    <h2 class="pull-left">All Pages</h2>
     <ol class="breadcrumb pull-right where-am-i">
-      <li><a href="#">Posts</a></li>
-      <li class="active">All Posts</li>
+      <li><a href="#">Pages</a></li>
+      <li class="active">All Pages</li>
     </ol>
     <div class="clearfix"></div>
   </div>
@@ -22,25 +22,25 @@
                     </thead>
                     <tbody>
                     <?php
-                    if($posts){
-                    foreach ($posts as $post){
+                    if($pages){
+                    foreach ($pages as $page){
                     ?>
                         <tr>
                             <td class="text-center"><input type="checkbox" class="select_all" name="" id=""></td>
-                            <td><?php echo $post['post_title'];?>
+                            <td><?php echo $page['post_title'];?>
                             <div class="row-actions">
-                            <a href="<?php echo base_url();?>dashboard/editpost/<?php echo $post['post_id'];?>">Edit</a> | <a href="<?php echo base_url()?>dashboard/deletepost/<?php echo $post['post_id'];?>" onclick='return confirm("Are you sure to Delete <?php echo $post['post_title'];?>?")'>Delete</a>
+                            <a href="<?php echo base_url();?>dashboard/editpage/<?php echo $page['post_id'];?>">Edit</a> | <a href="<?php echo base_url()?>dashboard/deletepage/<?php echo $page['post_id'];?>" onclick='return confirm("Are you sure to Delete <?php echo $page['post_title'];?>?")'>Delete</a>
                             </div>
                             </td>
                             <td>
 
                             </td>
-                            <td><?php echo $post['post_date'];?></td>
-                            <td><?php if($post['post_status']=="publish"){
+                            <td><?php echo $page['post_date'];?></td>
+                            <td><?php if($page['post_status']=="publish"){
                                     echo "Published";
-                                }elseif($post['post_status']=="pending"){
+                                }elseif($page['post_status']=="pending"){
                                     echo "Pending Review";
-                                }if($post['post_status']=="draft"){
+                                }if($page['post_status']=="draft"){
                                     echo "Draft";
                                 };?></td>
                         </tr>

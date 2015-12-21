@@ -1,15 +1,15 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Categories extends CI_Controller {
+class Pages extends CI_Controller {
 
     public function __construct(){
         parent::__construct();
         $this->load->library(array('themes','form_validation','pagination'));
-        $this->load->model(array('categories_model'));
+        $this->load->model(array('pages_model'));
     }
     public function index(){
-        $data['title']="All Categories";
+        $data['title']="All Pages";
 
         $page=$this->uri->segment(3);
 		$limit=5;
@@ -18,8 +18,8 @@ class Categories extends CI_Controller {
 		else:
 		$offset = ($page-1)*$limit;
 		endif;
-		$config['base_url']=base_url('dashboard/categories');
-		$config['total_rows']=$this->categories_model->get_categories_count();
+		$config['base_url']=base_url('dashboard/pages');
+		$config['total_rows']=$this->pages_model->get_pages_count();
 		$config['per_page'] = $limit;
         $config['use_page_numbers'] = TRUE;
 
@@ -44,24 +44,23 @@ class Categories extends CI_Controller {
 
 		$this->pagination->initialize($config);
 		$data['paging']=$this->pagination->create_links();
-        $data['categories']=$this->categories_model->get_categories_limit($limit, $offset);
+        $data['pages']=$this->pages_model->get_pages_limit($limit,$offset);
 
-        $data['container']="admin/categories";
+        $data['container']="admin/pages";
         $this->themes->load($data,TRUE);
 	}
-    public function newcategory(){
-        $data['title']="Add New Category";
-        $data['categories']=$this->categories_model->get_categories();
+    public function newpage(){
+        $data['title']="Add New Page";
 
         $validation_rules=array(
             array(
-                'field' => 'name',
-                'label' => 'Name',
+                'field' => 'title',
+                'label' => 'Title',
                 'rules' => 'required|max_length[255]'
             ),
             array(
-                'field' => 'description',
-                'label' => 'Description',
+                'field' => 'content',
+                'label' => 'Content',
                 'rules' => 'required'
             )
         );
@@ -69,42 +68,43 @@ class Categories extends CI_Controller {
 		$this->form_validation->set_rules($validation_rules);
 
         if ($this->form_validation->run() === false) {
-            $data['container']="admin/newcategory";
+            $data['container']="admin/newpage";
             $this->themes->load($data,TRUE);
 		} else {
-            $cat_id=$this->categories_model->addcategory();
-            redirect('/dashboard/editcategory/'.$cat_id);
+
+            $page_id=$this->pages_model->add_page();
+
+            redirect('/dashboard/editpage/'.$page_id);
 		}
 	}
-    public function editcategory($category_id){
-        $data['title']="Edit Category";
-        $data['category']=$this->categories_model->get_category_by_id($category_id);
-
+    public function editpage($page_id){
+        $data['title']="Edit Page";
+        $data['page']=$this->pages_model->get_page_by_id($page_id);
         $validation_rules=array(
             array(
-                'field' => 'name',
-                'label' => 'Name',
+                'field' => 'title',
+                'label' => 'Title',
                 'rules' => 'required|max_length[255]'
             ),
             array(
-                'field' => 'description',
-                'label' => 'Description',
+                'field' => 'content',
+                'label' => 'Content',
                 'rules' => 'required'
             )
         );
-
-		$this->form_validation->set_rules($validation_rules);
+        $this->form_validation->set_rules($validation_rules);
 
         if ($this->form_validation->run() === false) {
-            $data['container']="admin/editcategory";
+            $data['container']="admin/editpage";
             $this->themes->load($data,TRUE);
 		} else {
-            $this->categories_model->editcategory($category_id);
-            redirect('/dashboard/editcategory/'.$category_id);
+            $this->pages_model->edit_page($page_id);
+            redirect('/dashboard/editpage/'.$page_id);
 		}
+ 	}
+    public function deletepost($page_id){
+		$this->posts_model->delete_post($page_id);
+		redirect('/dashboard/pages');
 	}
-    public function deletecategory($category_id){
-		$this->categories_model->deletecategory($category_id);
-		redirect('/dashboard/categories');
-	}
+
 }

@@ -14,12 +14,23 @@
         <div class="panel panel-default">
             <div class="panel-heading">
             <div class="panel-title">
-                <i class="fa fa-list-alt"></i> Posts
+                <i class="fa fa-edit"></i> Posts
             </div>
             </div>
             <div class="list-group">
                 <a class="list-group-item" href="<?php echo base_url('dashboard/posts')?>">All Posts</a>
 			    <a class="list-group-item" href="<?php echo base_url('dashboard/newpost')?>">Add New</a>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+            <div class="panel-title">
+                <i class="fa fa-sticky-note"></i> Pages
+            </div>
+            </div>
+            <div class="list-group">
+                <a class="list-group-item" href="<?php echo base_url('dashboard/pages')?>">All Pages</a>
+			    <a class="list-group-item" href="<?php echo base_url('dashboard/newpage')?>">Add New</a>
             </div>
         </div>
         <div class="panel panel-default">

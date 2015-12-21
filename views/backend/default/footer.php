@@ -32,5 +32,28 @@
       image_advtab: true,
       });
       </script>
+      <script type="text/javascript">
+        $(document).ready(function(){
+            $('#select_all').on('click',function(){
+                if(this.checked){
+                    $('.select_all').each(function(){
+                        this.checked = true;
+                    });
+                }else{
+                     $('.select_all').each(function(){
+                        this.checked = false;
+                    });
+                }
+            });
+
+            $('.select_all').on('click',function(){
+                if($('.select_all:checked').length == $('.select_all').length){
+                    $('#select_all').prop('checked',true);
+                }else{
+                    $('#select_all').prop('checked',false);
+                }
+            });
+        });
+        </script>
 </body>
 </html>

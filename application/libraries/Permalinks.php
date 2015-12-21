@@ -32,6 +32,9 @@ class Permalinks{
         }
         return $permalink;
     }
+    public function get_page_permalinks($post_slug){
+        return $permalink=base_url($post_slug.'.html');
+    }
     public function get_category_permalinks($category_slug){
         $default_permalink=$this->get_default_category_permalink();
         $permalink=base_url($default_permalink.'/'.$category_slug);

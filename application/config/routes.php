@@ -55,24 +55,32 @@ $route['translate_uri_dashes'] = FALSE;
 
 $route['dashboard']= 'backend/dashboard/index';
 
+$route['dashboard/posts/(:num)']= 'backend/posts/index/$1';
 $route['dashboard/posts']= 'backend/posts/index';
 $route['dashboard/newpost']= 'backend/posts/newpost';
 $route['dashboard/editpost/(:num)']= 'backend/posts/editpost/$1';
 $route['dashboard/deletepost/(:num)']= 'backend/posts/deletepost/$1';
 
+$route['dashboard/pages/(:num)']= 'backend/pages/index/$1';
+$route['dashboard/pages']= 'backend/pages/index';
+$route['dashboard/newpage']= 'backend/pages/newpage';
+$route['dashboard/editpage/(:num)']= 'backend/pages/editpage/$1';
+$route['dashboard/deletepage/(:num)']= 'backend/pages/deletepage/$1';
+
+$route['dashboard/categories/(:num)']= 'backend/categories/index/$1';
 $route['dashboard/categories']= 'backend/categories/index';
 $route['dashboard/newcategory']= 'backend/categories/newcategory';
 $route['dashboard/editcategory/(:num)']= 'backend/categories/editcategory/$1';
 $route['dashboard/deletecategory/(:num)']= 'backend/categories/deletecategory/$1';
 
-$route['posts/(:any)'] = "blog/posts/$1";
+$route['posts/(:num)'] = "blog/posts/$1";
 $route['posts'] = "blog/posts";
 
-$route['(:num)/(:num)/(:num)/(:any)']= 'blog/post/$1/$2/$3/$4';
+$route['(:num)/(:num)/(:num)/(:any).html']= 'blog/post/$1/$2/$3/$4';
 $route['post/(:num)']= 'blog/post/$1';
-$route['(:any)']= 'blog/post/$1';
- 
-$route['page/(:num)']= 'blog/index/$1';
+$route['(:any).html']= 'blog/post/$1';
+
+$route['category/(:any)/(:num)']= 'blog/category/$1/$2';
 $route['category/(:any)']= 'blog/category/$1';
 $route['tags/(:any)']= 'blog/tags/$1';
 $route['search']= 'blog/search';

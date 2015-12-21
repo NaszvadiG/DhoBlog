@@ -1,9 +1,9 @@
 <div class="col-md-9">
   <div class="page-header">
-    <h2 class="pull-left">Add New Post</h2>
+    <h2 class="pull-left">Add New Page</h2>
     <ol class="breadcrumb pull-right where-am-i">
-      <li><a href="#">Posts</a></li>
-      <li class="active">Add New Post</li>
+      <li><a href="#">Pages</a></li>
+      <li class="active">Add New Page</li>
     </ol>
     <div class="clearfix"></div>
   </div>
@@ -24,19 +24,6 @@
 										placeholder="Enter title here" name="title">
 								</div>
 								<div class="form-group">
-									<label>Category</label><br>
-									<?php if($categories){
-									foreach ($categories as $category){
-									?>
-  										<label><input type="checkbox" name="categories[]" value="<?php echo $category['category_id']?>"> <?php echo $category['category_name']?></label>
-
-										<?php }}?>
-								</div>
-								<div class="form-group">
-                                            <label>Excerpt</label>
-                                            <textarea class="form-control" rows="5" name="excerpt" id="postexcerpt"></textarea>
-                                        </div>
-								<div class="form-group">
                                             <label>Content</label>
                                             <textarea class="form-control" rows="20" name="content" id="postcontent"></textarea>
                                         </div>
@@ -44,9 +31,6 @@
                                         <label>Settings</label>
                                         <div class="checkbox" >
             							<label><input type="checkbox" checked="checked" name="allow_comments">Allow Comments</label>
-            						    </div>
-                                        <div class="checkbox" >
-            							<label><input type="checkbox"  name="sticky">Sticky Post</label>
             						    </div>
                                 </div>
                                 <div class="form-group">
