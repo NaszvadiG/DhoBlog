@@ -13,4 +13,7 @@ class Settings{
     public function __construct(){
 		$this->CI =& get_instance();
 	}
+    public function get_blog_settings($blog_id){
+        return $this->CI->settings_model->get_blog_settings($blog_id);
+    }
 }

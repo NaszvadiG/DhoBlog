@@ -41,10 +41,20 @@
                                             <label>Content</label>
                                             <textarea class="form-control" rows="20" name="content" id="postcontent"><?php echo $post['post_content'];?></textarea>
                                         </div>
+                                        <div class="form-group">
+                                        <label>Settings</label>
+                                        <div class="checkbox" >
+            							<label><input type="checkbox" <?php if ($post['post_allow_comments']==1):?> checked="checked" <?php endif;?> name="allow_comments">Allow Comments</label>
+            						    </div>
+                                        <div class="checkbox" >
+            							<label><input type="checkbox" <?php if ($post['post_sticky']==1):?> checked="checked" <?php endif;?> name="sticky">Sticky Post</label>
+            						    </div>
+                                </div>
                                 <div class="form-group">
                                             <label>Status</label>
                                             <select class="form-control" name="status">
-                                                <option value="published"  <?php if($post['post_status'] === 'published'): ?>selected="selected"<?php endif; ?>>Published</option>
+                                                <option value="publish"  <?php if($post['post_status'] === 'publish'): ?>selected="selected"<?php endif; ?>>Published</option>
+                                                <option value="pending"  <?php if($post['post_status'] === 'pending'): ?>selected="selected"<?php endif; ?>>Pending Review</option>
                                                 <option value="draft" <?php if($post['post_status'] === 'draft'): ?>selected="selected"<?php endif; ?>>Draft</option>
                                             </select>
                                 </div>

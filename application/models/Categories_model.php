@@ -58,6 +58,25 @@ class Categories_model extends CI_Model {
 		$result['post_count'] = 0;
 		return $result;
 	}
+    public function get_categories_limit($limit,$offset){
+		$this->db->order_by('category_name', 'ASC');
+        $this->db->limit($limit, $offset);
+		$query = $this->db->get("categories");
+
+        if ($query->num_rows() > 0){
+    		$x = 0;
+    		foreach ( $query->result_array () as $row ) {
+    			$result [$x] ['category_id'] = $row ['category_id'];
+    			$result [$x] ['category_name'] = $row ['category_name'];
+    			$result [$x] ['category_description'] = $row ['category_description'];
+    			$result [$x] ['post_count']  = $this->get_posts_count_in_category($row ['category_slug']);
+                $result [$x] ['category_slug'] = $row ['category_slug'];
+                $result [$x] ['category_permalink'] = $this->permalinks->get_category_permalinks($row ['category_slug']);
+    			$x ++;
+    		}
+    		return $result;
+        }
+	}
     public function get_categories(){
 		$this->db->order_by('category_name', 'ASC');
 		$query = $this->db->get("categories");
@@ -81,11 +100,15 @@ class Categories_model extends CI_Model {
 		$this->db->from('posts');
 		$this->db->join('category_relationships', 'posts.post_id = category_relationships.post_id');
 		$this->db->join('categories', 'category_relationships.category_id = categories.category_id');
-		$this->db->where('posts.post_status', 'published');
+		$this->db->where('posts.post_status', 'publish');
 		$this->db->where('categories.category_slug', $category_slug);
 		$query = $this->db->get();
         $count=$query->row_array();
 		return $count['post_count'];
+	}
+    public function get_categories_count(){
+        $query = $this->db->count_all_results('categories');
+		return $query;
 	}
 	public function deletecategory($category_id){
 		$this->db->where('category_id', $category_id);

@@ -19,7 +19,7 @@ class Blog extends CI_Controller {
 		$offset = 0;
 
 		$config['base_url']=base_url('posts');
-		$config['total_rows']= $this->posts_model->get_posts_count();
+		$config['total_rows']= $this->posts_model->get_posts_count('publish');
 		$config['per_page'] = $limit;
         $config['use_page_numbers'] = TRUE;
 
@@ -45,7 +45,7 @@ class Blog extends CI_Controller {
 		$this->pagination->initialize($config);
 		$data['paging']=$this->pagination->create_links();
 
-		$data['posts']=$this->posts_model->get_posts_limit($limit,0);
+		$data['posts']=$this->posts_model->get_posts_limit($limit,0,'publish');
         $data['container']="blog/home";
 
         $this->themes->load($data);
@@ -62,7 +62,7 @@ class Blog extends CI_Controller {
 		$data['categories']=$this->categories_model->get_categories();
 
 		$config['base_url']=base_url('posts');
-		$config['total_rows']=$this->posts_model->get_posts_count();
+		$config['total_rows']=$this->posts_model->get_posts_count('publish');
 		$config['per_page'] = $limit;
         $config['use_page_numbers'] = TRUE;
 
@@ -88,7 +88,7 @@ class Blog extends CI_Controller {
 		$this->pagination->initialize($config);
 		$data['paging']=$this->pagination->create_links();
 
-		$data['posts']=$this->posts_model->get_posts_limit($limit,$offset);
+		$data['posts']=$this->posts_model->get_posts_limit($limit,$offset,'publish');
         $data['container']="blog/home";
 
 		$this->themes->load($data);

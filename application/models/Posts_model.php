@@ -17,18 +17,30 @@ class Posts_model extends CI_Model {
         $this->slug->set_config($config);
     }
     public function add_post(){
+        if($this->input->post('allow_comments')){
+            $post_allow_comments=1;
+        }else{
+            $post_allow_comments=0;
+        }
+        if($this->input->post('sticky')){
+            $post_sticky=1;
+        }else{
+            $post_sticky=0;
+        }
 	    $data = array(
 			'user_id' => 1,
 			'post_title' => $this->db->escape_str($this->input->post('title')),
 			'post_date'  => time(),
 			'post_excerpt'  => $this->db->escape_str($this->input->post('excerpt')),
             'post_content'  => $this->db->escape_str($this->input->post('content')),
+            'post_type'  => 'post',
+            'post_sticky'=>$post_sticky,
             'post_status'  => $this->input->post('status'),
-            'post_allow_comments'  => 1,
+            'post_allow_comments'=>$post_allow_comments,
             'post_slug'  =>$this->slug->create($this->db->escape_str($this->input->post('title')))
 		);
-		$this->db->insert('posts', $data);
-        return $this->db->insert_id();
+	   $this->db->insert('posts', $data);
+       return $this->db->insert_id();
 	}
     public function add_post_category($post_id, $category_id){
 		$data = array(
@@ -39,14 +51,25 @@ class Posts_model extends CI_Model {
 		$this->db->insert('category_relationships', $data);
 	}
     public function edit_post($post_id){
+        if($this->input->post('allow_comments')){
+            $post_allow_comments=1;
+        }else{
+            $post_allow_comments=0;
+        }
+        if($this->input->post('sticky')){
+            $post_sticky=1;
+        }else{
+            $post_sticky=0;
+        }
 	    $data = array(
 			'user_id' => 1,
 			'post_title' => $this->db->escape_str($this->input->post('title')),
-			'post_date'  => time(),
+			'post_last_updated'  => time(),
 			'post_excerpt'  => $this->db->escape_str($this->input->post('excerpt')),
             'post_content'  => $this->db->escape_str($this->input->post('content')),
+            'post_sticky'=>$post_sticky,
             'post_status'  => $this->input->post('status'),
-            'post_allow_comments'  => 1,
+            'post_allow_comments'=>$post_allow_comments,
             'post_slug'  =>$this->slug->create($this->db->escape_str($this->input->post('title')),$post_id)
 		);
 
@@ -68,6 +91,8 @@ class Posts_model extends CI_Model {
 		$result['post_title']= $post->post_title;
 		$result['post_excerpt']= $post->post_excerpt;
 		$result['post_content']= $post->post_content;
+        $result['post_allow_comments']= $post->post_allow_comments;
+        $result['post_sticky']= $post->post_sticky;
         $result['post_date']= unix_to_human_date($post->post_date);
 		$result['post_status'] = $post->post_status;
         $result['post_permalink'] = $this->permalinks->get_post_permalinks($post->post_id,$post->post_date,$post->post_slug);
@@ -84,6 +109,8 @@ class Posts_model extends CI_Model {
 		$result['post_title']= $post->post_title;
 		$result['post_excerpt']= $post->post_excerpt;
 		$result['post_content']= $post->post_content;
+        $result['post_allow_comments']= $post->post_allow_comments;
+        $result['post_sticky']= $post->post_sticky;
         $result['post_date']= unix_to_human_date($post->post_date);
 		$result['post_status'] = $post->post_status;
         $result['post_permalink'] = $this->permalinks->get_post_permalinks($post->post_id,$post->post_date,$post->post_slug);
@@ -98,6 +125,8 @@ class Posts_model extends CI_Model {
 		$result['post_title']= $post->post_title;
 		$result['post_excerpt']= $post->post_excerpt;
 		$result['post_content']= $post->post_content;
+        $result['post_allow_comments']= $post->post_allow_comments;
+        $result['post_sticky']= $post->post_sticky;
         $result['post_date']= unix_to_human_date($post->post_date);
 		$result['post_status'] = $post->post_status;
         $result['post_permalink'] = $this->permalinks->get_post_permalinks($post->post_id,$post->post_date,$post->post_slug);
@@ -109,7 +138,8 @@ class Posts_model extends CI_Model {
 		$this->db->join('category_relationships', 'posts.post_id = category_relationships.post_id');
 		$this->db->join('categories', 'category_relationships.category_id = categories.category_id');
 		$this->db->join('users','posts.user_id = users.user_id');
-		$this->db->where('posts.post_status', 'published');
+		$this->db->where('posts.post_status', 'publish');
+        $this->db->where('posts.post_type','post');
 		$this->db->where('categories.category_slug', $category_slug);
 		$this->db->order_by('posts.post_id', 'DESC');
         $this->db->limit($limit, $offset);
@@ -122,6 +152,8 @@ class Posts_model extends CI_Model {
     			$result [$x] ['post_title'] = $row ['post_title'];
                 $result [$x] ['post_excerpt'] = $row ['post_excerpt'];
                 $result [$x] ['post_content'] = $row ['post_content'];
+                $result [$x] ['post_allow_comments'] = $row ['post_allow_comments'];
+                $result [$x] ['post_sticky'] = $row ['post_sticky'];
     			$result [$x] ['post_date'] = unix_to_human_date($row ['post_date']);
     			$result [$x] ['post_status'] = $row ['post_status'];
                 $result [$x] ['post_permalink'] = $this->permalinks->get_post_permalinks($row ['post_id'],$row ['post_date'],$row ['post_slug']);
@@ -130,26 +162,11 @@ class Posts_model extends CI_Model {
     		return $result;
         }
 	}
-	public function get_posts(){
-	    $this->db->order_by('post_id', 'DESC');
-		$query = $this->db->get("posts");
-
-        if ($query->num_rows() > 0){
-    		$x = 0;
-    		foreach ( $query->result_array () as $row ) {
-    			$result [$x] ['post_id'] = $row ['post_id'];
-    			$result [$x] ['post_title'] = $row ['post_title'];
-                $result [$x] ['post_excerpt'] = $row ['post_excerpt'];
-                $result [$x] ['post_content'] = $row ['post_content'];
-    			$result [$x] ['post_date'] = unix_to_human_date($row ['post_date']);
-    			$result [$x] ['post_status'] = $row ['post_status'];
-                $result [$x] ['post_permalink'] = $this->permalinks->get_post_permalinks($row ['post_id'],$row ['post_date'],$row ['post_slug']);
-    			$x ++;
-    		}
-    		return $result;
+    public function get_posts_limit($limit,$offset,$post_status=NULL) {
+        if($post_status){
+            $this->db->where('post_status',$post_status);
         }
-	}
-    public function get_posts_limit($limit,$offset) {
+        $this->db->where('post_type','post');
         $this->db->order_by('post_date', 'DESC');
         $this->db->limit($limit, $offset);
 		$query = $this->db->get("posts");
@@ -168,14 +185,21 @@ class Posts_model extends CI_Model {
     		return $result;
         }
 	}
-    public function get_posts_count(){
-		$this->db->where('post_status', 'published');
-		$query = $this->db->count_all_results('posts');
+    public function get_posts_count($post_status=NULL){
+        if(!$post_status){
+            $this->db->where('post_type','post');
+		    $query = $this->db->count_all_results('posts');
+        }else{
+            $this->db->where('post_status',$post_status);
+            $this->db->where('post_type','post');
+		    $query = $this->db->count_all_results('posts');
+        }
 		return $query;
 	}
     public function get_post_categories($post_id){
 		$this->db->select('category_id');
 		$this->db->where('post_id', $post_id);
+        $this->db->where('post_type','post');
 
 		$query = $this->db->get('category_relationships');
 

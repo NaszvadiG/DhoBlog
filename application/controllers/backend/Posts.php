@@ -5,12 +5,46 @@ class Posts extends CI_Controller {
 
     public function __construct(){
         parent::__construct();
-        $this->load->library(array('themes','form_validation'));
+        $this->load->library(array('themes','form_validation','pagination'));
         $this->load->model(array('categories_model','posts_model'));
     }
     public function index(){
         $data['title']="All Posts";
-        $data['posts']=$this->posts_model->get_posts();
+
+        $page=$this->uri->segment(3);
+		$limit=5;
+        if(!$page):
+		$offset = 0;
+		else:
+		$offset = ($page-1)*$limit;
+		endif;
+		$config['base_url']=base_url('dashboard/posts');
+		$config['total_rows']=$this->posts_model->get_posts_count();
+		$config['per_page'] = $limit;
+        $config['use_page_numbers'] = TRUE;
+
+		$config['full_tag_open'] = '<ul class="pagination">';
+		$config['full_tag_close'] = '</ul>';
+		$config['first_tag_open'] = '<li>';
+        $config['first_link'] = 'First';
+        $config['first_tag_close'] = '</li>';
+        $config['prev_link'] = 'Prev';
+        $config['prev_tag_open'] = '<li>';
+        $config['prev_tag_close'] = '</li>';
+        $config['cur_tag_open'] = '<li class="active"><a href>';
+        $config['cur_tag_close'] = '</a></li>';
+        $config['next_link'] = 'Next';
+        $config['next_tag_open'] = '<li>';
+        $config['next_tag_close'] = '</li>';
+        $config['num_tag_open'] = '<li>';
+        $config['num_tag_close'] = '</li>';
+        $config['last_tag_open'] = '<li>';
+        $config['last_link'] = 'Last';
+        $config['last_tag_close'] = '</li>';
+
+		$this->pagination->initialize($config);
+		$data['paging']=$this->pagination->create_links();
+        $data['posts']=$this->posts_model->get_posts_limit($limit,$offset);
 
         $data['container']="admin/posts";
         $this->themes->load($data,TRUE);
