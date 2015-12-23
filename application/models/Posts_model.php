@@ -33,7 +33,6 @@ class Posts_model extends CI_Model {
 			'post_date'  => time(),
 			'post_excerpt'  => $this->db->escape_str($this->input->post('excerpt')),
             'post_content'  => $this->db->escape_str($this->input->post('content')),
-            'post_type'  => 'post',
             'post_sticky'=>$post_sticky,
             'post_status'  => $this->input->post('status'),
             'post_allow_comments'=>$post_allow_comments,
@@ -139,7 +138,6 @@ class Posts_model extends CI_Model {
 		$this->db->join('categories', 'category_relationships.category_id = categories.category_id');
 		$this->db->join('users','posts.user_id = users.user_id');
 		$this->db->where('posts.post_status', 'publish');
-        $this->db->where('posts.post_type','post');
 		$this->db->where('categories.category_slug', $category_slug);
 		$this->db->order_by('posts.post_id', 'DESC');
         $this->db->limit($limit, $offset);
@@ -166,7 +164,6 @@ class Posts_model extends CI_Model {
         if($post_status){
             $this->db->where('post_status',$post_status);
         }
-        $this->db->where('post_type','post');
         $this->db->order_by('post_date', 'DESC');
         $this->db->limit($limit, $offset);
 		$query = $this->db->get("posts");
@@ -187,11 +184,9 @@ class Posts_model extends CI_Model {
 	}
     public function get_posts_count($post_status=NULL){
         if(!$post_status){
-            $this->db->where('post_type','post');
 		    $query = $this->db->count_all_results('posts');
         }else{
             $this->db->where('post_status',$post_status);
-            $this->db->where('post_type','post');
 		    $query = $this->db->count_all_results('posts');
         }
 		return $query;
@@ -199,7 +194,6 @@ class Posts_model extends CI_Model {
     public function get_post_categories($post_id){
 		$this->db->select('category_id');
 		$this->db->where('post_id', $post_id);
-        $this->db->where('post_type','post');
 
 		$query = $this->db->get('category_relationships');
 

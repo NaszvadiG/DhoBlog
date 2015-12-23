@@ -12,6 +12,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 $config['version'] = '1.0.0';
 $config['author'] = 'Mutasim Ridlo, S.Kom';
 $config['author_email'] = 'ridho@mutasimridlo.com';
+$config['author_website'] = 'http://www.ridho.id/';
 $config['version_check_url'] = 'https://update.dhosoft.com/dhoblog/';
 $config['website_url'] = 'https://www.dhosoft.com/dhoblog/';
 $config['documentation_url'] = 'https://docs.dhosoft.com/dhoblog/';

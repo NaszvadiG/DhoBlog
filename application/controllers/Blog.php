@@ -5,7 +5,7 @@ class Blog extends CI_Controller {
 
     public function __construct(){
         parent::__construct();
-        $this->load->model(array('categories_model','posts_model'));
+        $this->load->model(array('categories_model','posts_model','menus_model','pages_model'));
         $this->load->library(array('themes','pagination','permalinks'));
     }
     public function index(){
@@ -13,6 +13,7 @@ class Blog extends CI_Controller {
 		$data['description']="dhoBlog is a free and open source blogging platform built using the CodeIgniter PHP framework.";
         $data['keywords']="dhoblog, free blog";
 		$data['categories']=$this->categories_model->get_categories();
+        $data['menus']=$this->menus_model->get_menus();
 
 		$page=$this->uri->segment(2);
 		$limit=5;
@@ -60,6 +61,7 @@ class Blog extends CI_Controller {
 		$data['description']="dhoBlog is a free and open source blogging platform built using the CodeIgniter PHP framework.";
         $data['keywords']="dhoblog, free blog";
 		$data['categories']=$this->categories_model->get_categories();
+        $data['menus']=$this->menus_model->get_menus();
 
 		$config['base_url']=base_url('posts');
 		$config['total_rows']=$this->posts_model->get_posts_count('publish');
@@ -103,6 +105,7 @@ class Blog extends CI_Controller {
         $data['keywords']="dhoblog, free blog";
 		$data['categories']=$data['categories']=$this->categories_model->get_categories();
 		$data['category']=$cat;
+        $data['menus']=$this->menus_model->get_menus();
 
 		$page=$this->uri->segment(3);
 		$limit=5;
@@ -151,27 +154,39 @@ class Blog extends CI_Controller {
     		$data['description']=$post['post_excerpt'];
             $data['keywords']='dhoblog,';
     		$data['categories']=$this->categories_model->get_categories();
-    		$data['query']="";
     		$data['post']=$post;
+            $data['menus']=$this->menus_model->get_menus();
         }elseif($permalink=="numeric"){
             $post=$this->posts_model->get_post_by_id($field1);
     		$data['title']=$post['post_title']." - Dhoblog";
     		$data['description']=$post['post_excerpt'];
             $data['keywords']='dhoblog,';
     		$data['categories']=$this->categories_model->get_categories();
-    		$data['query']="";
     		$data['post']=$post;
+            $data['menus']=$this->menus_model->get_menus();
         }elseif($permalink=="postname"){
             $post=$this->posts_model->get_post_by_slug($field1);
     		$data['title']=$post['post_title']." - Dhoblog";
     		$data['description']=$post['post_excerpt'];
             $data['keywords']='dhoblog,';
     		$data['categories']=$this->categories_model->get_categories();
-    		$data['query']="";
     		$data['post']=$post;
+            $data['menus']=$this->menus_model->get_menus();
         }
 
         $data['container']="blog/post";
+		$this->themes->load($data);
+	}
+    public function page($page_slug=NULL){
+        $page=$this->pages_model->get_page_by_slug($page_slug);
+		$data['title']=$page['page_title']." - Dhoblog";
+		$data['description']="";
+        $data['keywords']='dhoblog,';
+		$data['categories']=$this->categories_model->get_categories();
+		$data['page']=$page;
+        $data['menus']=$this->menus_model->get_menus();
+
+        $data['container']="blog/page";
 		$this->themes->load($data);
 	}
 }

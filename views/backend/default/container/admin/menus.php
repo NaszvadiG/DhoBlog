@@ -1,9 +1,9 @@
 <div class="col-md-9">
   <div class="page-header">
-    <h2 class="pull-left">All Pages</h2>
+    <h2 class="pull-left">All Menus</h2>
     <ol class="breadcrumb pull-right where-am-i">
-      <li><a href="#">Pages</a></li>
-      <li class="active">All Pages</li>
+      <li><a href="#">Menus</a></li>
+      <li class="active">All Menus</li>
     </ol>
     <div class="clearfix"></div>
   </div>
@@ -15,30 +15,26 @@
                         <tr>
                             <th class="text-center"><input  type="checkbox" name="" id="select_all"></th>
                             <th>Title</th>
-                            <th>Date</th>
-                            <th>Status</th>
+                            <th>URL</th>
+                            <th>Type</th>
+                            <th>Position</th>
                         </tr>
                     </thead>
                     <tbody>
                     <?php
-                    if($pages){
-                    foreach ($pages as $page){
+                    if($menus){
+                    foreach ($menus as $menu){
                     ?>
                         <tr>
                             <td class="text-center"><input type="checkbox" class="select_all" name="" id=""></td>
-                            <td><?php echo $page['page_title'];?>
+                            <td><?php echo $menu['menu_title'];?>
                             <div class="row-actions">
-                            <a href="<?php echo base_url();?>dashboard/editpage/<?php echo $page['page_id'];?>">Edit</a> | <a href="<?php echo base_url()?>dashboard/deletepage/<?php echo $page['page_id'];?>" onclick='return confirm("Are you sure to Delete <?php echo $page['page_title'];?>?")'>Delete</a>
+                            <a href="<?php echo base_url();?>dashboard/editmenu/<?php echo $menu['menu_id'];?>">Edit</a> | <a href="<?php echo base_url()?>dashboard/deletemenu/<?php echo $menu['menu_id'];?>" onclick='return confirm("Are you sure to Delete <?php echo $menu['menu_title'];?>?")'>Delete</a>
                             </div>
                             </td>
-                            <td><?php echo $page['page_date'];?></td>
-                            <td><?php if($page['page_status']=="publish"){
-                                    echo "Published";
-                                }elseif($page['page_status']=="pending"){
-                                    echo "Pending Review";
-                                }if($page['page_status']=="draft"){
-                                    echo "Draft";
-                                };?></td>
+                            <td><?php echo $menu['menu_url'];?></td>
+                            <td><?php echo $menu['menu_type'];?></td>
+                            <td><?php echo $menu['menu_position'];?></td>
                         </tr>
                         <?php }}?>
                     </tbody>
