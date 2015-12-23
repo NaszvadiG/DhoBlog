@@ -57,7 +57,7 @@
                                         <option value="draft">Draft</option>
                                     </select>
                                 </div>
-                                    <button value="submit" name="save" type="submit" class="btn btn-primary">Submit</button>
+                                    <button value="submit" name="save" type="submit" class="btn btn-primary">Publish</button>
 							</form>
                         </div>
                         </div>

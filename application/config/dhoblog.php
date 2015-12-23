@@ -76,7 +76,7 @@ $config['domain_current_site']='dhoblog.local';
 | Your path domain in current site
 |
 */
-$confog['path_current_site']='/';
+$config['path_current_site']='/';
 
 /*
 |--------------------------------------------------------------------------
@@ -86,7 +86,7 @@ $confog['path_current_site']='/';
 | Your side id in current site
 |
 */
-$confog['site_id_current_site']=1;
+$config['site_id_current_site']=1;
 
 /*
 |--------------------------------------------------------------------------
@@ -96,4 +96,4 @@ $confog['site_id_current_site']=1;
 | Your blog id in current site
 |
 */
-$confog['blog_id_current_site']=1;
+$config['blog_id_current_site']=1;

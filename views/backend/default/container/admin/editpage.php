@@ -40,7 +40,7 @@
                                                 <option value="draft" <?php if($page['page_status'] === 'draft'): ?>selected="selected"<?php endif; ?>>Draft</option>
                                             </select>
                                 </div>
-                                        <button value="submit" name="save" type="submit" class="btn btn-primary">Submit</button>
+                                        <button value="submit" name="save" type="submit" class="btn btn-primary">Update</button>
 							</form>
                         </div>
                         </div>
