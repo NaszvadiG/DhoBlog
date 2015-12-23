@@ -15,7 +15,10 @@ class Permalinks{
         $this->CI->load->helper('datetime');
 	}
     public function get_default_post_permalink(){
-        return "postname";
+        return "datename";
+    }
+    public function get_default_page_permalink(){
+        return "page";
     }
     public function get_default_category_permalink(){
         return "category";
@@ -32,8 +35,10 @@ class Permalinks{
         }
         return $permalink;
     }
-    public function get_page_permalinks($post_slug){
-        return $permalink=base_url($post_slug.'.html');
+    public function get_page_permalinks($page_slug){
+        $default_permalink=$this->get_default_page_permalink();
+        $permalink=base_url($default_permalink.'/'.$page_slug.'.html');
+        return $permalink;
     }
     public function get_category_permalinks($category_slug){
         $default_permalink=$this->get_default_category_permalink();

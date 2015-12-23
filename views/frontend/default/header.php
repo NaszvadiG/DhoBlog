@@ -24,6 +24,17 @@
         </div>
         <div class="navbar-collapse collapse" id="navbar-main">
           <ul class="nav navbar-nav">
+          <?php if($menus){
+              foreach($menus as $menu){ ?>
+              <li><a href="<?php if($menu['menu_type']=="page"){
+                                echo base_url('page/'.$menu['menu_url']);
+                            }if($menu['menu_type']=="link"){
+                                echo $menu['menu_url'];
+                            }if($menu['menu_type']=="category"){
+                                echo base_url('category/'.$menu['menu_url']);
+                            }
+                            ?>"><?php echo $menu['menu_title'];?></a></li>
+          <?php }}?>
           </ul>
           <ul class="nav navbar-nav navbar-right">
             <li class="dropdown">

@@ -18,7 +18,7 @@
             </div>
             </div>
             <div class="list-group">
-                <a class="list-group-item" href="<?php echo base_url('dashboard/posts')?>">All Posts</a>
+                <a class="list-group-item" href="<?php echo base_url('dashboard/posts')?>">Manage Posts</a>
 			    <a class="list-group-item" href="<?php echo base_url('dashboard/newpost')?>">Add New</a>
             </div>
         </div>
@@ -29,7 +29,7 @@
             </div>
             </div>
             <div class="list-group">
-                <a class="list-group-item" href="<?php echo base_url('dashboard/pages')?>">All Pages</a>
+                <a class="list-group-item" href="<?php echo base_url('dashboard/pages')?>">Manage Pages</a>
 			    <a class="list-group-item" href="<?php echo base_url('dashboard/newpage')?>">Add New</a>
             </div>
         </div>
@@ -40,8 +40,19 @@
             </div>
             </div>
             <div class="list-group">
-                <a class="list-group-item" href="<?php echo base_url('dashboard/categories')?>">All Categories</a>
+                <a class="list-group-item" href="<?php echo base_url('dashboard/categories')?>">Manage Categories</a>
 			    <a class="list-group-item" href="<?php echo base_url('dashboard/newcategory')?>">Add New</a>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+            <div class="panel-title">
+                <i class="fa fa-navicon"></i> Menus
+            </div>
+            </div>
+            <div class="list-group">
+                <a class="list-group-item" href="<?php echo base_url('dashboard/menus')?>">Manage Menus</a>
+			    <a class="list-group-item" href="<?php echo base_url('dashboard/newmenus')?>">Add New</a>
             </div>
         </div>
         <div class="panel panel-default">
@@ -51,7 +62,7 @@
             </div>
             </div>
             <div class="list-group">
-                <a class="list-group-item" href="<?php echo base_url('dashboard/comments')?>">All Comments</a>
+                <a class="list-group-item" href="<?php echo base_url('dashboard/comments')?>">Manage Comments</a>
             </div>
         </div>
         <div class="panel panel-default">
@@ -61,7 +72,7 @@
             </div>
             </div>
             <div class="list-group">
-                <a class="list-group-item" href="<?php echo base_url('dashboard/users')?>">All Users</a>
+                <a class="list-group-item" href="<?php echo base_url('dashboard/users')?>">Manage Users</a>
                 <a class="list-group-item" href="<?php echo base_url('dashboard/newuser')?>">Add New</a>
                 <a class="list-group-item" href="<?php echo base_url('dashboard/profile')?>">Your Profile</a>
             </div>

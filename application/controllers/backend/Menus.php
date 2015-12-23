@@ -1,15 +1,15 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Pages extends CI_Controller {
+class Menus extends CI_Controller {
 
     public function __construct(){
         parent::__construct();
         $this->load->library(array('themes','form_validation','pagination'));
-        $this->load->model(array('pages_model'));
+        $this->load->model(array('menus_model'));
     }
     public function index(){
-        $data['title']="All Pages";
+        $data['title']="All Menus";
 
         $page=$this->uri->segment(3);
 		$limit=5;
@@ -18,8 +18,8 @@ class Pages extends CI_Controller {
 		else:
 		$offset = ($page-1)*$limit;
 		endif;
-		$config['base_url']=base_url('dashboard/pages');
-		$config['total_rows']=$this->pages_model->get_pages_count();
+		$config['base_url']=base_url('dashboard/menus');
+		$config['total_rows']=$this->menus_model->get_menus_count();
 		$config['per_page'] = $limit;
         $config['use_page_numbers'] = TRUE;
 
@@ -44,12 +44,12 @@ class Pages extends CI_Controller {
 
 		$this->pagination->initialize($config);
 		$data['paging']=$this->pagination->create_links();
-        $data['pages']=$this->pages_model->get_pages_limit($limit,$offset);
+        $data['menus']=$this->menus_model->get_menus_limit($limit,$offset);
 
-        $data['container']="admin/pages";
+        $data['container']="admin/menus";
         $this->themes->load($data,TRUE);
 	}
-    public function newpage(){
+    public function newmenu(){
         $data['title']="Add New Page";
 
         $validation_rules=array(
@@ -72,14 +72,14 @@ class Pages extends CI_Controller {
             $this->themes->load($data,TRUE);
 		} else {
 
-            $page_id=$this->pages_model->add_page();
+            $page_id=$this->menus_model->add_page();
 
             redirect('/dashboard/editpage/'.$page_id);
 		}
 	}
-    public function editpage($page_id){
+    public function editmenu($page_id){
         $data['title']="Edit Page";
-        $data['page']=$this->pages_model->get_page_by_id($page_id);
+        $data['page']=$this->menus_model->get_page_by_id($page_id);
         $validation_rules=array(
             array(
                 'field' => 'title',
@@ -98,12 +98,12 @@ class Pages extends CI_Controller {
             $data['container']="admin/editpage";
             $this->themes->load($data,TRUE);
 		} else {
-            $this->pages_model->edit_page($page_id);
+            $this->menus_model->edit_page($page_id);
             redirect('/dashboard/editpage/'.$page_id);
 		}
  	}
-    public function deletepage($page_id){
-		$this->pages_model->delete_page($page_id);
+    public function deletemenu($page_id){
+		$this->menus_model->delete_page($page_id);
 		redirect('/dashboard/pages');
 	}
 
