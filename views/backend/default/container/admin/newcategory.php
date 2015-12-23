@@ -27,7 +27,7 @@
                                         <label>Description</label>
                         <textarea class="form-control" rows="5" name="description" id="categorydescription"></textarea>
                     </div>
-                        <button value="submit" name="save" type="submit" class="btn btn-primary">Submit</button>
+                        <button value="submit" name="save" type="submit" class="btn btn-primary">Add New Category</button>
                 </form>
             </div>
             </div>

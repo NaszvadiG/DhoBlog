@@ -27,7 +27,7 @@
                         <label>Description</label>
                         <textarea class="form-control" rows="5" name="description" id="categorydescription"><?php echo $category['category_description']; ?></textarea>
                     </div>
-                    <button value="submit" name="save" type="submit" class="btn btn-primary">Submit</button>
+                    <button value="submit" name="save" type="submit" class="btn btn-primary">Update</button>
                     </form>
                 </div>
                 </div>
