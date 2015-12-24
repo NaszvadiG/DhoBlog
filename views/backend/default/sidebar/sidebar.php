@@ -7,8 +7,8 @@
             </div>
             </div>
             <div class="list-group">
-                <a class="list-group-item" href="<?php echo base_url('dashboard')?>">Home</a>
-                <a class="list-group-item" href="<?php echo base_url('dashboard/update')?>">Update</a>
+                <a class="list-group-item <?php if($this->uri->segment(2)==""):?>active<?php endif;?>" href="<?php echo base_url('dashboard')?>">Home</a>
+                <a class="list-group-item <?php if($this->uri->segment(2)=="update"):?>active<?php endif;?>" href="<?php echo base_url('dashboard/update')?>">Update</a>
             </div>
         </div>
         <div class="panel panel-default">
@@ -18,8 +18,8 @@
             </div>
             </div>
             <div class="list-group">
-                <a class="list-group-item" href="<?php echo base_url('dashboard/posts')?>">Manage Posts</a>
-			    <a class="list-group-item" href="<?php echo base_url('dashboard/newpost')?>">Add New</a>
+                <a class="list-group-item <?php if($this->uri->segment(2)=="posts" || $this->uri->segment(2)=="editpost"):?>active<?php endif;?>" href="<?php echo base_url('dashboard/posts')?>">Manage Posts</a>
+			    <a class="list-group-item <?php if($this->uri->segment(2)=="newpost"):?>active<?php endif;?>" href="<?php echo base_url('dashboard/newpost')?>">Add New</a>
             </div>
         </div>
         <div class="panel panel-default">
@@ -29,8 +29,8 @@
             </div>
             </div>
             <div class="list-group">
-                <a class="list-group-item" href="<?php echo base_url('dashboard/pages')?>">Manage Pages</a>
-			    <a class="list-group-item" href="<?php echo base_url('dashboard/newpage')?>">Add New</a>
+                <a class="list-group-item <?php if($this->uri->segment(2)=="pages" || $this->uri->segment(2)=="editpage"):?>active<?php endif;?>" href="<?php echo base_url('dashboard/pages')?>">Manage Pages</a>
+			    <a class="list-group-item <?php if($this->uri->segment(2)=="newpage"):?>active<?php endif;?>" href="<?php echo base_url('dashboard/newpage')?>">Add New</a>
             </div>
         </div>
         <div class="panel panel-default">
@@ -40,8 +40,8 @@
             </div>
             </div>
             <div class="list-group">
-                <a class="list-group-item" href="<?php echo base_url('dashboard/categories')?>">Manage Categories</a>
-			    <a class="list-group-item" href="<?php echo base_url('dashboard/newcategory')?>">Add New</a>
+                <a class="list-group-item <?php if($this->uri->segment(2)=="categories" || $this->uri->segment(2)=="editcategory"):?>active<?php endif;?>" href="<?php echo base_url('dashboard/categories')?>">Manage Categories</a>
+			    <a class="list-group-item <?php if($this->uri->segment(2)=="newcategory"):?>active<?php endif;?>" href="<?php echo base_url('dashboard/newcategory')?>">Add New</a>
             </div>
         </div>
         <div class="panel panel-default">
@@ -51,8 +51,8 @@
             </div>
             </div>
             <div class="list-group">
-                <a class="list-group-item" href="<?php echo base_url('dashboard/menus')?>">Manage Menus</a>
-			    <a class="list-group-item" href="<?php echo base_url('dashboard/newmenus')?>">Add New</a>
+                <a class="list-group-item <?php if($this->uri->segment(2)=="menus"):?>active<?php endif;?>" href="<?php echo base_url('dashboard/menus')?>">Manage Menus</a>
+			    <a class="list-group-item <?php if($this->uri->segment(2)=="newmenus"):?>active<?php endif;?>" href="<?php echo base_url('dashboard/newmenus')?>">Add New</a>
             </div>
         </div>
         <div class="panel panel-default">
@@ -62,7 +62,7 @@
             </div>
             </div>
             <div class="list-group">
-                <a class="list-group-item" href="<?php echo base_url('dashboard/comments')?>">Manage Comments</a>
+                <a class="list-group-item <?php if($this->uri->segment(2)=="comments"):?>active<?php endif;?>" href="<?php echo base_url('dashboard/comments')?>">Manage Comments</a>
             </div>
         </div>
         <div class="panel panel-default">
@@ -72,9 +72,9 @@
             </div>
             </div>
             <div class="list-group">
-                <a class="list-group-item" href="<?php echo base_url('dashboard/users')?>">Manage Users</a>
-                <a class="list-group-item" href="<?php echo base_url('dashboard/newuser')?>">Add New</a>
-                <a class="list-group-item" href="<?php echo base_url('dashboard/profile')?>">Your Profile</a>
+                <a class="list-group-item <?php if($this->uri->segment(2)=="users"):?>active<?php endif;?>" href="<?php echo base_url('dashboard/users')?>">Manage Users</a>
+                <a class="list-group-item <?php if($this->uri->segment(2)=="newuser"):?>active<?php endif;?>" href="<?php echo base_url('dashboard/newuser')?>">Add New</a>
+                <a class="list-group-item <?php if($this->uri->segment(2)=="profile"):?>active<?php endif;?>" href="<?php echo base_url('dashboard/profile')?>">Your Profile</a>
             </div>
         </div>
         <div class="panel panel-default">
@@ -84,8 +84,8 @@
             </div>
             </div>
             <div class="list-group">
-                <a class="list-group-item" href="<?php echo base_url('dashboard/frontend')?>">Frontend Themes</a>
-			    <a class="list-group-item" href="<?php echo base_url('dashboard/backend')?>">Backend Themes</a>
+                <a class="list-group-item <?php if($this->uri->segment(2)=="frontend"):?>active<?php endif;?>" href="<?php echo base_url('dashboard/frontend')?>">Frontend Themes</a>
+			    <a class="list-group-item <?php if($this->uri->segment(2)=="backend"):?>active<?php endif;?>" href="<?php echo base_url('dashboard/backend')?>">Backend Themes</a>
             </div>
         </div>
         <div class="panel panel-default">
@@ -95,8 +95,8 @@
             </div>
             </div>
             <div class="list-group">
-                <a class="list-group-item" href="<?php echo base_url('dashboard/general')?>">General</a>
-				<a class="list-group-item" href="<?php echo base_url('dashboard/permalinks')?>">Permalinks</a>
+                <a class="list-group-item <?php if($this->uri->segment(2)=="general"):?>active<?php endif;?>" href="<?php echo base_url('dashboard/general')?>">General</a>
+				<a class="list-group-item <?php if($this->uri->segment(2)=="permalinks"):?>active<?php endif;?>" href="<?php echo base_url('dashboard/permalinks')?>">Permalinks</a>
             </div>
         </div>
     </div>
