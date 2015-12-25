@@ -3,8 +3,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Pages_model extends CI_Model {
 
-    public function __construct()
-    {
+    public function __construct(){
         parent::__construct();
         $this->load->database();
         $config=array(
@@ -14,6 +13,7 @@ class Pages_model extends CI_Model {
             'field_slug'=>'page_slug'
         );
         $this->load->library(array('slug','permalinks'));
+        $this->load->helper('datetime');
         $this->slug->set_config($config);
     }
     public function add_page(){
