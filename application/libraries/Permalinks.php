@@ -12,7 +12,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Permalinks{
     public function __construct(){
 		$this->CI =& get_instance();
-        $this->CI->load->helper('datetime');
 	}
     public function get_default_post_permalink(){
         return "datename";

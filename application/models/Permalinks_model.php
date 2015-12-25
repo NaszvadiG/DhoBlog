@@ -7,7 +7,7 @@ class Permalinks_model extends CI_Model {
         parent::__construct();
         $this->load->database();
     }
-    public function get_permalinks($blog_id){
+    public function get_permalink_settings($blog_id){
         $this->db->where_in('setting_name', array('post_permalink','category_permalink','page_permalink','tag_permalink'));
 
         if($this->config->item('blog_id_current_site')==$blog_id){
@@ -21,7 +21,7 @@ class Permalinks_model extends CI_Model {
 		}
 		return $result;
     }
-    function edit_permalinks($blog_id){
+    function edit_permalink_settings($blog_id){
         if($this->config->item('blog_id_current_site')==$blog_id){
             $this->db->set('setting_value', $this->input->post('post_permalink'));
             $this->db->where('setting_name', 'post_permalink');

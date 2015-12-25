@@ -14,7 +14,7 @@ class Sites {
 		$this->CI =& get_instance();
         $this->CI->load->helper("file");
 	}
-    public function get_only_domain($url){
+    public function get_domain($url){
         $host = @parse_url($url, PHP_URL_HOST);
         if (!$host){
             $host = $url;
@@ -53,5 +53,19 @@ class Sites {
             $x++;
         }
         return $sites;
+    }
+    function get_site($url){
+        $domain=$this->get_domain($url);
+        $site=$this->CI->database->view_site($domain);
+        $data=array();
+        $data['domain']=$domain;
+        if($site){
+            $data['id']=$site['id'];
+            $data['type']=$site['type'];
+        }else{
+            $data['id']="";
+            $data['type']="";
+        }
+       return $data;
     }
 }

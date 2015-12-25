@@ -10,11 +10,11 @@ class Permalinks extends CI_Controller {
     }
     public function index(){
 	    $data['title']="Permalinks";
-        $data['permalinks']=$this->permalinks_model->get_permalinks(1);
+        $data['permalinks']=$this->permalinks_model->get_permalink_settings(1);
 
         if ($this->input->post('submit')) {
-            $this->permalinks_model->edit_permalinks(1);
-            $data['permalinks']=$this->permalinks_model->get_permalinks(1);
+            $this->permalinks_model->edit_permalink_settings(1);
+            $data['permalinks']=$this->permalinks_model->get_permalink_settings(1);
 		}
         $data['container']="admin/permalinks";
         $this->themes->load($data,TRUE);

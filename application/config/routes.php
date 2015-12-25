@@ -79,6 +79,7 @@ $route['dashboard/newmenu']= 'backend/menus/newmenu';
 $route['dashboard/editmenu/(:num)']= 'backend/menus/editmenu/$1';
 $route['dashboard/deletemenu/(:num)']= 'backend/menus/deletemenu/$1';
 
+$route['dashboard/general']= 'backend/general/index';
 $route['dashboard/permalinks']= 'backend/permalinks/index';
 
 $route['posts/(:num)'] = "blog/posts/$1";
