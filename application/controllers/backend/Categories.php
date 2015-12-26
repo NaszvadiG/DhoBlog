@@ -1,12 +1,10 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Categories extends CI_Controller {
+class Categories extends Backend {
 
     public function __construct(){
         parent::__construct();
-        $this->load->library(array('themes','form_validation','pagination'));
-        $this->load->model(array('categories_model'));
     }
     public function index(){
         $data['title']="All Categories";

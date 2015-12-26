@@ -24,3 +24,12 @@ if ( ! function_exists('unix_to_date_slug')) {
         return date('Y/m/d',$timestamp);
     }
 }
+if ( ! function_exists('get_current_date')) {
+    function get_current_time($blog_id){
+        $CI=& get_instance();
+        $CI->load->model('settings_model');
+        $timezone=$CI->settings_model->get_default_timezone($blog_id);
+        date_default_timezone_set($timezone);
+        return time();
+    }
+}

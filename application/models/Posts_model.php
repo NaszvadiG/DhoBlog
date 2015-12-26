@@ -5,14 +5,13 @@ class Posts_model extends CI_Model {
 
     public function __construct(){
         parent::__construct();
-        $this->load->database();
         $config=array(
-            'table'=>'posts',
+            'table'=>$this->table_posts,
             'field_id'=>'post_id',
             'field_title'=>'post_title',
             'field_slug'=>'post_slug'
         );
-        $this->load->library(array('slug','permalinks'));
+        $this->load->library('slug');
         $this->load->helper('datetime');
         $this->slug->set_config($config);
     }
@@ -38,7 +37,7 @@ class Posts_model extends CI_Model {
             'post_allow_comments'=>$post_allow_comments,
             'post_slug'  =>$this->slug->create($this->db->escape_str($this->input->post('title')))
 		);
-	   $this->db->insert('posts', $data);
+	   $this->db->insert($this->table_posts, $data);
        return $this->db->insert_id();
 	}
     public function add_post_category($post_id, $category_id){
@@ -47,7 +46,7 @@ class Posts_model extends CI_Model {
     		'category_id' => $category_id
 		);
 
-		$this->db->insert('category_relationships', $data);
+		$this->db->insert($this->table_category_relationships, $data);
 	}
     public function edit_post($post_id){
         if($this->input->post('allow_comments')){
@@ -61,7 +60,6 @@ class Posts_model extends CI_Model {
             $post_sticky=0;
         }
 	    $data = array(
-			'user_id' => 1,
 			'post_title' => $this->db->escape_str($this->input->post('title')),
 			'post_last_updated'  => time(),
 			'post_excerpt'  => $this->db->escape_str($this->input->post('excerpt')),
@@ -73,7 +71,7 @@ class Posts_model extends CI_Model {
 		);
 
         $this->db->where('post_id', $post_id);
-        $this->db->update('posts', $data);
+        $this->db->update($this->table_posts, $data);
 	}
     public function edit_post_categories($post_id, $categories){
         $this->delete_post_categories($post_id);
@@ -83,7 +81,7 @@ class Posts_model extends CI_Model {
 	}
     public function get_post_by_id($post_id){
 	    $this->db->where('post_id', $post_id);
-        $query=$this->db->get('posts');
+        $query=$this->db->get($this->table_posts);
 
 		$post=$query->row();
 		$result['post_id']= $post->post_id;
@@ -101,7 +99,7 @@ class Posts_model extends CI_Model {
         $date = $year.'-'.$month.'-'.$day;
         $this->db->where('from_unixtime(post_date, "%Y-%m-%d")=', $date);
         $this->db->where('post_slug', $slug);
-        $query=$this->db->get('posts');
+        $query=$this->db->get($this->table_posts);
 
 		$post=$query->row();
 		$result['post_id']= $post->post_id;
@@ -117,7 +115,7 @@ class Posts_model extends CI_Model {
 	}
     public function get_post_by_slug($slug){
         $this->db->where('post_slug', $slug);
-        $query=$this->db->get('posts');
+        $query=$this->db->get($this->table_posts);
 
 		$post=$query->row();
 		$result['post_id']= $post->post_id;
@@ -133,13 +131,13 @@ class Posts_model extends CI_Model {
 	}
     public function get_posts_by_category($category_slug,$limit,$offset){
 	    $this->db->select('*');
-		$this->db->from('posts');
-		$this->db->join('category_relationships', 'posts.post_id = category_relationships.post_id');
-		$this->db->join('categories', 'category_relationships.category_id = categories.category_id');
-		$this->db->join('users','posts.user_id = users.user_id');
-		$this->db->where('posts.post_status', 'publish');
-		$this->db->where('categories.category_slug', $category_slug);
-		$this->db->order_by('posts.post_id', 'DESC');
+		$this->db->from($this->table_posts);
+		$this->db->join($this->table_category_relationships, $this->table_posts.'.post_id = '.$this->table_category_relationships.'.post_id');
+		$this->db->join($this->table_categories, $this->table_category_relationships.'.category_id = '.$this->table_categories.'.category_id');
+		$this->db->join($this->table_users,$this->table_posts.'.user_id = '.$this->table_users.'.user_id');
+		$this->db->where($this->table_posts.'.post_status', 'publish');
+		$this->db->where($this->table_categories.'.category_slug', $category_slug);
+		$this->db->order_by($this->table_posts.'.post_id', 'DESC');
         $this->db->limit($limit, $offset);
 		$query = $this->db->get();
 
@@ -166,7 +164,7 @@ class Posts_model extends CI_Model {
         }
         $this->db->order_by('post_date', 'DESC');
         $this->db->limit($limit, $offset);
-		$query = $this->db->get("posts");
+		$query = $this->db->get($this->table_posts);
 		if ($query->num_rows() > 0){
     		$x = 0;
     		foreach ( $query->result_array () as $row ) {
@@ -184,10 +182,10 @@ class Posts_model extends CI_Model {
 	}
     public function get_posts_count($post_status=NULL){
         if(!$post_status){
-		    $query = $this->db->count_all_results('posts');
+		    $query = $this->db->count_all_results($this->table_posts);
         }else{
             $this->db->where('post_status',$post_status);
-		    $query = $this->db->count_all_results('posts');
+		    $query = $this->db->count_all_results($this->table_posts);
         }
 		return $query;
 	}
@@ -195,7 +193,7 @@ class Posts_model extends CI_Model {
 		$this->db->select('category_id');
 		$this->db->where('post_id', $post_id);
 
-		$query = $this->db->get('category_relationships');
+		$query = $this->db->get($this->table_category_relationships);
 
 		if ($query->num_rows() > 0)	{
 			$result = $query->result_array();
@@ -207,10 +205,10 @@ class Posts_model extends CI_Model {
 	}
     function delete_post($post_id){
 	    $this->db->where('post_id', $post_id);
-        $this->db->delete('posts');
+        $this->db->delete($this->table_posts);
 	}
     public function delete_post_categories($post_id){
 		$this->db->where('post_id', $post_id);
-		$this->db->delete('category_relationships');
+		$this->db->delete($this->table_category_relationships);
 	}
 }

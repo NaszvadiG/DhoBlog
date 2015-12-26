@@ -10,24 +10,16 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Themes {
-
     public function __construct(){
 		$this->CI =& get_instance();
 	}
-    public function get_default_theme(){
-		$theme=array(
-               "backend"=>"default",
-               "frontend"=>"default"
-        );
-		return $theme;
-	}
     public function load($data=NULL,$admin=FALSE){
-        $theme=$this->get_default_theme();
         if($admin==TRUE){
-            $this->CI->load->view('backend/'.$theme['backend'].'/layout', $data);
+            $theme=$this->CI->frontend_theme;
+            $this->CI->load->view('backend/'.$theme.'/layout', $data);
         }else{
-            $this->CI->load->view('frontend/'.$theme['frontend'].'/layout', $data);
+            $theme=$this->CI->backend_theme;
+            $this->CI->load->view('frontend/'.$theme.'/layout', $data);
         }
-
     }
 }

@@ -27,6 +27,12 @@ class Sites {
         }
         return $host;
     }
+    public function get_subdomain($url){
+        $domain=$this->get_domain($url);
+        preg_match('/([^\.]+)\.[^\.]+\.[^\.]+$/', $domain, $rgMatches);
+        $sDomain = count($rgMatches)?$rgMatches[1]:null;
+        return $sDomain;
+    }
     function create_site_dir($site_id){
         $path = FCPATH."/files/".$site_id;
 
@@ -42,7 +48,7 @@ class Sites {
     }
     function get_sites($user_id=NULL){
         $sites=array();
-        $data=$CI->database->view_all_sites();
+        $data=$CI->sites_model->get_sites($user_id);
         $x=0;
         foreach($data as $site){
             $sites[$x]['blog_id']=$site['id'];
@@ -56,16 +62,9 @@ class Sites {
     }
     function get_site($url){
         $domain=$this->get_domain($url);
-        $site=$this->CI->database->view_site($domain);
-        $data=array();
-        $data['domain']=$domain;
-        if($site){
-            $data['id']=$site['id'];
-            $data['type']=$site['type'];
-        }else{
-            $data['id']="";
-            $data['type']="";
-        }
-       return $data;
+        return $this->CI->sites_model->get_site($domain);
+    }
+    public function get_site_settings(){
+        return $this->CI->sites_model->get_site_settings();
     }
 }

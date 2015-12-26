@@ -1,20 +1,20 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class General extends CI_Controller {
+class General extends Backend {
 
     public function __construct(){
         parent::__construct();
-        $this->load->library(array('themes'));
-        $this->load->model(array('general_model'));
+        $this->load->model('general_model');
+        $this->load->helper('timezone');
     }
     public function index(){
 	    $data['title']="General";
-        $data['general']=$this->general_model->get_general_settings(1);
-
+        $data['general']=$this->general_model->get_general_settings();
+        $data['timezone']=get_timezone_lists();
         if ($this->input->post('submit')) {
-            $this->general_model->edit_general_settings(1);
-            $data['general']=$this->general_model->get_general_settings(1);
+            $this->general_model->edit_general_settings();
+            $data['general']=$this->general_model->get_general_settings();
 		}
         $data['container']="admin/general";
         $this->themes->load($data,TRUE);

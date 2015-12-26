@@ -3,10 +3,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Feeds_model extends CI_Model {
 
-    public function __construct()
-    {
+    public function __construct(){
         parent::__construct();
-        $this->load->database();
     }
     function get_feeds() {
 		$query = $this->db->query ( "select * from tb_posts where post_status='published' order by post_id desc limit 10" );

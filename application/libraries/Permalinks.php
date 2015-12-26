@@ -13,17 +13,8 @@ class Permalinks{
     public function __construct(){
 		$this->CI =& get_instance();
 	}
-    public function get_default_post_permalink(){
-        return "datename";
-    }
-    public function get_default_page_permalink(){
-        return "page";
-    }
-    public function get_default_category_permalink(){
-        return "category";
-    }
     public function get_post_permalinks($post_id,$post_date,$post_slug){
-        $default_permalink=$this->get_default_post_permalink();
+        $default_permalink=$this->CI->post_permalink;
         $permalink="";
         if($default_permalink=="datename"){
             $permalink=base_url(unix_to_date_slug($post_date).'/'.$post_slug.'.html');
@@ -35,13 +26,18 @@ class Permalinks{
         return $permalink;
     }
     public function get_page_permalinks($page_slug){
-        $default_permalink=$this->get_default_page_permalink();
+        $default_permalink=$this->CI->page_permalink;
         $permalink=base_url($default_permalink.'/'.$page_slug.'.html');
         return $permalink;
     }
     public function get_category_permalinks($category_slug){
-        $default_permalink=$this->get_default_category_permalink();
+        $default_permalink=$this->CI->category_permalink;
         $permalink=base_url($default_permalink.'/'.$category_slug);
+        return $permalink;
+    }
+    public function get_tag_permalinks($tag_slug){
+        $default_permalink=$this->CI->tag_permalink;
+        $permalink=base_url($default_permalink.'/'.$tag_slug);
         return $permalink;
     }
 }

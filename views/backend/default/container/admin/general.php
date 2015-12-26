@@ -71,7 +71,9 @@
                     </div>
                     <div class="col-md-9">
                          <select class="form-control" name="timezone" id="timezone">
-                              <option value="<?php echo $general['timezone'];?>" ><?php echo $general['timezone'];?></option>
+                            <?php foreach($timezone as $zone){?>
+                              <option value="<?php echo $zone;?>" <?php if($zone==$general['timezone']): ?>selected="selected"<?php endif; ?>><?php echo $zone;?></option>
+                              <?php }?>
                          </select>
                          <p class="help-block">Choose a timezone in the same city where you live.</p>
                     </div>
