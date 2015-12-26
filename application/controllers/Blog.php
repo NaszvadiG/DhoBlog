@@ -1,20 +1,12 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Blog extends CI_Controller {
+class Blog extends Frontend{
 
     public function __construct(){
         parent::__construct();
-        $this->load->model(array('categories_model','posts_model','menus_model','pages_model'));
-        $this->load->library(array('themes','pagination','permalinks'));
     }
     public function index(){
-        $data['title']="dhoBlog";
-		$data['description']="dhoBlog is a free and open source blogging platform built using the CodeIgniter PHP framework.";
-        $data['keywords']="dhoblog, free blog";
-		$data['categories']=$this->categories_model->get_categories();
-        $data['menus']=$this->menus_model->get_menus();
-
 		$page=$this->uri->segment(2);
 		$limit=5;
 		$offset = 0;
@@ -44,24 +36,20 @@ class Blog extends CI_Controller {
         $config['last_tag_close'] = '</li>';
 
 		$this->pagination->initialize($config);
-		$data['paging']=$this->pagination->create_links();
+		$this->data['paging']=$this->pagination->create_links();
 
-		$data['posts']=$this->posts_model->get_posts_limit($limit,0,'publish');
-        $data['container']="blog/home";
+		$this->data['posts']=$this->posts_model->get_posts_limit($limit,0,'publish');
+        $this->data['container']="blog/home";
 
-        $this->themes->load($data);
+        $this->themes->load($this->data);
 	}
     public function posts(){
 		$page=$this->uri->segment(2);
+        $this->data['title']="Page ".$page;
 		$limit=5;
 
 		if($page){
         $offset = ($page-1)*$limit;
-		$data['title']="dhoBlog";
-		$data['description']="dhoBlog is a free and open source blogging platform built using the CodeIgniter PHP framework.";
-        $data['keywords']="dhoblog, free blog";
-		$data['categories']=$this->categories_model->get_categories();
-        $data['menus']=$this->menus_model->get_menus();
 
 		$config['base_url']=base_url('posts');
 		$config['total_rows']=$this->posts_model->get_posts_count('publish');
@@ -88,24 +76,20 @@ class Blog extends CI_Controller {
         $config['last_tag_close'] = '</li>';
 
 		$this->pagination->initialize($config);
-		$data['paging']=$this->pagination->create_links();
+		$this->data['paging']=$this->pagination->create_links();
 
-		$data['posts']=$this->posts_model->get_posts_limit($limit,$offset,'publish');
-        $data['container']="blog/home";
+		$this->data['posts']=$this->posts_model->get_posts_limit($limit,$offset,'publish');
+        $this->data['container']="blog/home";
 
-		$this->themes->load($data);
+		$this->themes->load($this->data);
 		}else{
 			redirect(base_url());
 		}
 	}
     public function category($category_slug){
         $cat=$this->categories_model->get_category_by_slug($category_slug);
-		$data['title']=$cat['category_name']." - dhoBlog";
-		$data['description']=$cat['category_description'];
-        $data['keywords']="dhoblog, free blog";
-		$data['categories']=$data['categories']=$this->categories_model->get_categories();
-		$data['category']=$cat;
-        $data['menus']=$this->menus_model->get_menus();
+		$this->data['title']=$cat['category_name'];
+		$this->data['category']=$cat;
 
 		$page=$this->uri->segment(3);
 		$limit=5;
@@ -139,54 +123,34 @@ class Blog extends CI_Controller {
         $config['last_tag_close'] = '</li>';
 
 		$this->pagination->initialize($config);
-		$data['paging']=$this->pagination->create_links();
+		$this->data['paging']=$this->pagination->create_links();
 
-		$data['posts']=$this->posts_model->get_posts_by_category($category_slug,$limit,$offset);
-		$data['container']="blog/home";
+		$this->data['posts']=$this->posts_model->get_posts_by_category($category_slug,$limit,$offset);
+		$this->data['container']="blog/home";
 
-		$this->themes->load($data);
+		$this->themes->load($this->data);
 	}
     public function post($field1=NULL,$field2=NULL,$field3=NULL,$field4=NULL){
-        $permalink=$this->permalinks->get_default_post_permalink();
+        $permalink=$this->post_permalink;
         if($permalink=="datename"){
             $post=$this->posts_model->get_post_by_date_slug($field1,$field2,$field3,$field4);
-    		$data['title']=$post['post_title']." - Dhoblog";
-    		$data['description']=$post['post_excerpt'];
-            $data['keywords']='dhoblog,';
-    		$data['categories']=$this->categories_model->get_categories();
-    		$data['post']=$post;
-            $data['menus']=$this->menus_model->get_menus();
         }elseif($permalink=="numeric"){
             $post=$this->posts_model->get_post_by_id($field1);
-    		$data['title']=$post['post_title']." - Dhoblog";
-    		$data['description']=$post['post_excerpt'];
-            $data['keywords']='dhoblog,';
-    		$data['categories']=$this->categories_model->get_categories();
-    		$data['post']=$post;
-            $data['menus']=$this->menus_model->get_menus();
         }elseif($permalink=="postname"){
             $post=$this->posts_model->get_post_by_slug($field1);
-    		$data['title']=$post['post_title']." - Dhoblog";
-    		$data['description']=$post['post_excerpt'];
-            $data['keywords']='dhoblog,';
-    		$data['categories']=$this->categories_model->get_categories();
-    		$data['post']=$post;
-            $data['menus']=$this->menus_model->get_menus();
         }
+        $this->data['title']=$post['post_title'];
+    	$this->data['post']=$post;
 
-        $data['container']="blog/post";
-		$this->themes->load($data);
+        $this->data['container']="blog/post";
+		$this->themes->load($this->data);
 	}
     public function page($page_slug=NULL){
         $page=$this->pages_model->get_page_by_slug($page_slug);
-		$data['title']=$page['page_title']." - Dhoblog";
-		$data['description']="";
-        $data['keywords']='dhoblog,';
-		$data['categories']=$this->categories_model->get_categories();
-		$data['page']=$page;
-        $data['menus']=$this->menus_model->get_menus();
+		$this->data['title']=$page['page_title'];
+		$this->data['page']=$page;
 
-        $data['container']="blog/page";
-		$this->themes->load($data);
+        $this->data['container']="blog/page";
+		$this->themes->load($this->data);
 	}
 }

@@ -5,14 +5,13 @@ class Pages_model extends CI_Model {
 
     public function __construct(){
         parent::__construct();
-        $this->load->database();
         $config=array(
-            'table'=>'pages',
+            'table'=>$this->table_pages,
             'field_id'=>'page_id',
             'field_title'=>'page_title',
             'field_slug'=>'page_slug'
         );
-        $this->load->library(array('slug','permalinks'));
+        $this->load->library('slug');
         $this->load->helper('datetime');
         $this->slug->set_config($config);
     }
@@ -31,7 +30,7 @@ class Pages_model extends CI_Model {
             'page_allow_comments'=>$page_allow_comments,
             'page_slug'  =>$this->slug->create($this->db->escape_str($this->input->post('title')))
 		);
-	   $this->db->insert('pages', $data);
+	   $this->db->insert($this->table_pages, $data);
        return $this->db->insert_id();
 	}
     public function edit_page($page_id){
@@ -51,11 +50,11 @@ class Pages_model extends CI_Model {
 		);
 
         $this->db->where('page_id', $page_id);
-        $this->db->update('pages', $data);
+        $this->db->update($this->table_pages, $data);
 	}
     public function get_page_by_id($page_id){
 	    $this->db->where('page_id', $page_id);
-        $query=$this->db->get('pages');
+        $query=$this->db->get($this->table_pages);
 
 		$page=$query->row();
 		$result['page_id']= $page->page_id;
@@ -69,7 +68,7 @@ class Pages_model extends CI_Model {
 	}
     public function get_page_by_slug($page_slug){
         $this->db->where('page_slug', $page_slug);
-        $query=$this->db->get('pages');
+        $query=$this->db->get($this->table_pages);
 
 		$page=$query->row();
 		$result['page_id']= $page->page_id;
@@ -87,7 +86,7 @@ class Pages_model extends CI_Model {
         }
         $this->db->order_by('page_date', 'DESC');
         $this->db->limit($limit, $offset);
-		$query = $this->db->get('pages');
+		$query = $this->db->get($this->table_pages);
 		if ($query->num_rows() > 0){
     		$x = 0;
     		foreach ( $query->result_array () as $row ) {
@@ -107,7 +106,7 @@ class Pages_model extends CI_Model {
             $this->db->where('page_status',$page_status);
         }
         $this->db->order_by('page_order', 'ASC');
-		$query = $this->db->get('pages');
+		$query = $this->db->get($this->table_pages);
 		if ($query->num_rows() > 0){
     		$x = 0;
     		foreach ( $query->result_array () as $row ) {
@@ -124,15 +123,15 @@ class Pages_model extends CI_Model {
 	}
     public function get_pages_count($page_status=NULL){
         if(!$page_status){
-		    $query = $this->db->count_all_results('pages');
+		    $query = $this->db->count_all_results($this->table_pages);
         }else{
             $this->db->where('page_status',$page_status);
-		    $query = $this->db->count_all_results('pages');
+		    $query = $this->db->count_all_results($this->table_pages);
         }
 		return $query;
 	}
     function delete_page($page_id){
 	    $this->db->where('page_id', $page_id);
-        $this->db->delete('pages');
+        $this->db->delete($this->table_pages);
 	}
 }

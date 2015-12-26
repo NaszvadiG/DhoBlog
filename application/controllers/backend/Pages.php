@@ -1,12 +1,10 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Pages extends CI_Controller {
+class Pages extends Backend {
 
     public function __construct(){
         parent::__construct();
-        $this->load->library(array('themes','form_validation','pagination'));
-        $this->load->model(array('pages_model'));
     }
     public function index(){
         $data['title']="All Pages";

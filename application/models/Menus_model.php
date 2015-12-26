@@ -5,11 +5,10 @@ class Menus_model extends CI_Model {
 
     public function __construct(){
         parent::__construct();
-        $this->load->database();
     }
     public function get_menus(){
         $this->db->order_by('menu_position', 'ASC');
-		$query = $this->db->get('menus');
+		$query = $this->db->get($this->table_menus);
 		if ($query->num_rows() > 0){
     		$x = 0;
     		foreach ( $query->result_array () as $row ) {
@@ -26,7 +25,7 @@ class Menus_model extends CI_Model {
     public function get_menus_limit($limit,$offset) {
         $this->db->order_by('menu_position', 'ASC');
         $this->db->limit($limit, $offset);
-		$query = $this->db->get('menus');
+		$query = $this->db->get($this->table_menus);
 		if ($query->num_rows() > 0){
     		$x = 0;
     		foreach ( $query->result_array () as $row ) {
@@ -41,7 +40,7 @@ class Menus_model extends CI_Model {
         }
 	}
     public function get_menus_count($page_status=NULL){
-		$query = $this->db->count_all_results('menus');
+		$query = $this->db->count_all_results($this->table_menus);
 		return $query;
 	}
 }

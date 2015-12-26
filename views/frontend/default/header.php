@@ -1,10 +1,13 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
     <meta charset="utf-8">
-    <title><?php echo $title;?></title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title><?php if($is_home):echo $blog_title;else: echo $title.' - '.$blog_title;endif;?></title>
+    <?php if($is_home){?><meta name="description" content="<?php echo $blog_description;?>">
+    <meta name="keywords" content="<?php echo $blog_keywords;?>">
+    <?php }?><meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="<?php echo $this->config->item('name').' '.$this->config->item('version');?>">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <link rel="stylesheet" href="<?php echo base_url('views/frontend/default/assets/css/bootstrap.min.css');?>" media="screen">
     <link rel="stylesheet" href="<?php echo base_url('views/frontend/default/assets/css/style.css');?>">

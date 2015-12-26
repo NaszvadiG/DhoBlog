@@ -9,6 +9,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 | Informations related with dhoBlog
 |
 */
+$config['name'] = 'DhoBlog';
 $config['version'] = '1.0.0';
 $config['author'] = 'Mutasim Ridlo, S.Kom';
 $config['author_email'] = 'me@ridho.id';

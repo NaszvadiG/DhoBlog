@@ -1,12 +1,10 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Menus extends CI_Controller {
+class Menus extends Backend {
 
     public function __construct(){
         parent::__construct();
-        $this->load->library(array('themes','form_validation','pagination'));
-        $this->load->model(array('menus_model'));
     }
     public function index(){
         $data['title']="All Menus";

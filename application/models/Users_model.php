@@ -3,16 +3,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Users_model extends CI_Model {
 
-    public function __construct()
-    {
+    public function __construct(){
         parent::__construct();
         $this->load->library('passwords');
-        $this->load->database();
     }
 
     public function user_login(){
 		$user_name = $this->input->post('user_name');
-        $query = $this->db->get_where('users', array('user_name' => $user_name));
+        $query = $this->db->get_where($this->table_users, array('user_name' => $user_name));
 
         if ($query->num_rows() == 1) {
             $user= $query->row();
@@ -38,6 +36,6 @@ class Users_model extends CI_Model {
 			'user_password'  => $this->passwords->hash_password($this->input->post('password')),
 			'user_registered'  => time(),
 		);
-		return $this->db->insert('users', $data);
+		return $this->db->insert($this->table_users, $data);
     }
 }
