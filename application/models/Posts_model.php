@@ -157,17 +157,17 @@ class Posts_model extends CI_Model {
 			return $result;
 		}
 	}
-    public function get_posts_limit($limit,$offset,$post_status=NULL) {
+    public function get_posts_limit($limit,$offset,$post_status=NULL,$post_sticky=FALSE) {
         $this->db->select($this->table_posts.'.*,'.$this->table_users.'.user_display_name');
 		$this->db->from($this->table_posts);
-	 	$this->db->join($this->table_category_relationships, $this->table_posts.'.post_id = '.$this->table_category_relationships.'.post_id');
-	 	$this->db->join($this->table_categories, $this->table_category_relationships.'.category_id = '.$this->table_categories.'.category_id');
 		$this->db->join($this->table_users,$this->table_posts.'.user_id = '.$this->table_users.'.user_id');
 
         if($post_status){
-            $this->db->where('post_status',$post_status);
+            $this->db->where($this->table_posts.'.post_status',$post_status);
         }
-        $this->db->order_by($this->table_posts.'.post_sticky', 'DESC');
+        if($post_sticky==TRUE){
+            $this->db->order_by($this->table_posts.'.post_sticky', 'DESC');
+        }
         $this->db->order_by($this->table_posts.'.post_date', 'DESC');
         $this->db->limit($limit, $offset);
 		$query = $this->db->get();
