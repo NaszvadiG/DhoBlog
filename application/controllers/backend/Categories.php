@@ -5,6 +5,14 @@ class Categories extends Backend {
 
     public function __construct(){
         parent::__construct();
+        $category_config=array(
+            'table'=>$this->table_categories,
+            'field_id'=>'category_id',
+            'field_title'=>'category_name',
+            'field_slug'=>'category_slug'
+        );
+        $this->load->library('slug');
+        $this->slug->set_config($category_config);
     }
     public function index(){
         $data['title']="All Categories";

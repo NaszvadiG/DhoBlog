@@ -5,6 +5,15 @@ class Posts extends Backend {
 
     public function __construct(){
         parent::__construct();
+        $post_config=array(
+            'table'=>$this->table_posts,
+            'field_id'=>'post_id',
+            'field_title'=>'post_title',
+            'field_slug'=>'post_slug'
+        );
+        $this->load->library('slug');
+        $this->slug->set_config($post_config);
+        $this->load->helper('datetime');
     }
     public function index(){
         $data['title']="All Posts";

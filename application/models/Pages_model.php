@@ -5,15 +5,6 @@ class Pages_model extends CI_Model {
 
     public function __construct(){
         parent::__construct();
-        $config=array(
-            'table'=>$this->table_pages,
-            'field_id'=>'page_id',
-            'field_title'=>'page_title',
-            'field_slug'=>'page_slug'
-        );
-        $this->load->library('slug');
-        $this->load->helper('datetime');
-        $this->slug->set_config($config);
     }
     public function add_page(){
         if($this->input->post('allow_comments')){

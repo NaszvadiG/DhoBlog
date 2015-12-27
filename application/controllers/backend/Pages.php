@@ -5,6 +5,15 @@ class Pages extends Backend {
 
     public function __construct(){
         parent::__construct();
+        $page_config=array(
+            'table'=>$this->table_pages,
+            'field_id'=>'page_id',
+            'field_title'=>'page_title',
+            'field_slug'=>'page_slug'
+        );
+        $this->load->library('slug');
+        $this->slug->set_config($page_config);
+        $this->load->helper('datetime');
     }
     public function index(){
         $data['title']="All Pages";

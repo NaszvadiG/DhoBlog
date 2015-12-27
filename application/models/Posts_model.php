@@ -5,15 +5,6 @@ class Posts_model extends CI_Model {
 
     public function __construct(){
         parent::__construct();
-        $config=array(
-            'table'=>$this->table_posts,
-            'field_id'=>'post_id',
-            'field_title'=>'post_title',
-            'field_slug'=>'post_slug'
-        );
-        $this->load->library('slug');
-        $this->load->helper('datetime');
-        $this->slug->set_config($config);
     }
     public function add_post(){
         if($this->input->post('allow_comments')){
@@ -80,105 +71,117 @@ class Posts_model extends CI_Model {
         }
 	}
     public function get_post_by_id($post_id){
-	    $this->db->where('post_id', $post_id);
-        $query=$this->db->get($this->table_posts);
+        $this->db->select($this->table_posts.'.*,'.$this->table_users.'.user_display_name');
+		$this->db->from($this->table_posts);
+	 	$this->db->join($this->table_category_relationships, $this->table_posts.'.post_id = '.$this->table_category_relationships.'.post_id');
+	 	$this->db->join($this->table_categories, $this->table_category_relationships.'.category_id = '.$this->table_categories.'.category_id');
+		$this->db->join($this->table_users,$this->table_posts.'.user_id = '.$this->table_users.'.user_id');
+	    $this->db->where($this->table_posts.'.post_id', $post_id);
+        $this->db->limit(1);
+        $query=$this->db->get();
 
-		$post=$query->row();
-		$result['post_id']= $post->post_id;
-		$result['post_title']= $post->post_title;
-		$result['post_excerpt']= $post->post_excerpt;
-		$result['post_content']= $post->post_content;
-        $result['post_allow_comments']= $post->post_allow_comments;
-        $result['post_sticky']= $post->post_sticky;
-        $result['post_date']= unix_to_human_date($post->post_date);
-		$result['post_status'] = $post->post_status;
-        $result['post_permalink'] = $this->permalinks->get_post_permalinks($post->post_id,$post->post_date,$post->post_slug);
-		return $result;
+		if ($query->num_rows() ==1)	{
+			$result = $query->row_array();
+
+          	$result['categories'] = $this->categories_model->get_categories_by_ids($this->get_post_categories($result['post_id']));
+         	$result['comment_count'] = $this->db->where('post_id', $result['post_id'])->from($this->table_comments)->count_all_results();
+            $result['post_permalink']=$this->permalinks->get_post_permalinks($result['post_id'],$result['post_date'],$result['post_slug']);
+            $result['post_date']=unix_to_human_date($result['post_date']);
+			return $result;
+		}
 	}
     public function get_post_by_date_slug($year,$month,$day,$slug){
         $date = $year.'-'.$month.'-'.$day;
-        $this->db->where('from_unixtime(post_date, "%Y-%m-%d")=', $date);
-        $this->db->where('post_slug', $slug);
-        $query=$this->db->get($this->table_posts);
 
-		$post=$query->row();
-		$result['post_id']= $post->post_id;
-		$result['post_title']= $post->post_title;
-		$result['post_excerpt']= $post->post_excerpt;
-		$result['post_content']= $post->post_content;
-        $result['post_allow_comments']= $post->post_allow_comments;
-        $result['post_sticky']= $post->post_sticky;
-        $result['post_date']= unix_to_human_date($post->post_date);
-		$result['post_status'] = $post->post_status;
-        $result['post_permalink'] = $this->permalinks->get_post_permalinks($post->post_id,$post->post_date,$post->post_slug);
-		return $result;
+        $this->db->select($this->table_posts.'.*,'.$this->table_users.'.user_display_name');
+		$this->db->from($this->table_posts);
+	 	$this->db->join($this->table_category_relationships, $this->table_posts.'.post_id = '.$this->table_category_relationships.'.post_id');
+	 	$this->db->join($this->table_categories, $this->table_category_relationships.'.category_id = '.$this->table_categories.'.category_id');
+		$this->db->join($this->table_users,$this->table_posts.'.user_id = '.$this->table_users.'.user_id');
+        $this->db->where('from_unixtime(post_date, "%Y-%m-%d")=', $date);
+        $this->db->where($this->table_posts.'.post_slug', $slug);
+        $this->db->limit(1);
+        $query=$this->db->get();
+
+		if ($query->num_rows() ==1)	{
+			$result = $query->row_array();
+
+          	$result['categories'] = $this->categories_model->get_categories_by_ids($this->get_post_categories($result['post_id']));
+         	$result['comment_count'] = $this->db->where('post_id', $result['post_id'])->from($this->table_comments)->count_all_results();
+            $result['post_permalink']=$this->permalinks->get_post_permalinks($result['post_id'],$result['post_date'],$result['post_slug']);
+            $result['post_date']=unix_to_human_date($result['post_date']);
+			return $result;
+		}
 	}
     public function get_post_by_slug($slug){
-        $this->db->where('post_slug', $slug);
-        $query=$this->db->get($this->table_posts);
+        $this->db->select($this->table_posts.'.*,'.$this->table_users.'.user_display_name');
+		$this->db->from($this->table_posts);
+	 	$this->db->join($this->table_category_relationships, $this->table_posts.'.post_id = '.$this->table_category_relationships.'.post_id');
+	 	$this->db->join($this->table_categories, $this->table_category_relationships.'.category_id = '.$this->table_categories.'.category_id');
+		$this->db->join($this->table_users,$this->table_posts.'.user_id = '.$this->table_users.'.user_id');
+        $this->db->where($this->table_posts.'.post_slug', $slug);
+        $this->db->limit(1);
+        $query=$this->db->get();
 
-		$post=$query->row();
-		$result['post_id']= $post->post_id;
-		$result['post_title']= $post->post_title;
-		$result['post_excerpt']= $post->post_excerpt;
-		$result['post_content']= $post->post_content;
-        $result['post_allow_comments']= $post->post_allow_comments;
-        $result['post_sticky']= $post->post_sticky;
-        $result['post_date']= unix_to_human_date($post->post_date);
-		$result['post_status'] = $post->post_status;
-        $result['post_permalink'] = $this->permalinks->get_post_permalinks($post->post_id,$post->post_date,$post->post_slug);
-		return $result;
+		if ($query->num_rows() ==1)	{
+			$result = $query->row_array();
+
+          	$result['categories'] = $this->categories_model->get_categories_by_ids($this->get_post_categories($result['post_id']));
+         	$result['comment_count'] = $this->db->where('post_id', $result['post_id'])->from($this->table_comments)->count_all_results();
+            $result['post_permalink']=$this->permalinks->get_post_permalinks($result['post_id'],$result['post_date'],$result['post_slug']);
+            $result['post_date']=unix_to_human_date($result['post_date']);
+			return $result;
+		}
 	}
     public function get_posts_by_category($category_slug,$limit,$offset){
-	    $this->db->select('*');
+	    $this->db->select($this->table_posts.'.*,'.$this->table_users.'.user_display_name');
 		$this->db->from($this->table_posts);
-		$this->db->join($this->table_category_relationships, $this->table_posts.'.post_id = '.$this->table_category_relationships.'.post_id');
-		$this->db->join($this->table_categories, $this->table_category_relationships.'.category_id = '.$this->table_categories.'.category_id');
+	 	$this->db->join($this->table_category_relationships, $this->table_posts.'.post_id = '.$this->table_category_relationships.'.post_id');
+	 	$this->db->join($this->table_categories, $this->table_category_relationships.'.category_id = '.$this->table_categories.'.category_id');
 		$this->db->join($this->table_users,$this->table_posts.'.user_id = '.$this->table_users.'.user_id');
-		$this->db->where($this->table_posts.'.post_status', 'publish');
-		$this->db->where($this->table_categories.'.category_slug', $category_slug);
-		$this->db->order_by($this->table_posts.'.post_id', 'DESC');
+	   	$this->db->where($this->table_posts.'.post_status', 'publish');
+	 	$this->db->where($this->table_categories.'.category_slug', $category_slug);
+		$this->db->order_by($this->table_posts.'.post_date', 'DESC');
         $this->db->limit($limit, $offset);
 		$query = $this->db->get();
 
-        if ($query->num_rows() > 0){
-    		$x = 0;
-    		foreach ( $query->result_array () as $row ) {
-    			$result [$x] ['post_id'] = $row ['post_id'];
-    			$result [$x] ['post_title'] = $row ['post_title'];
-                $result [$x] ['post_excerpt'] = $row ['post_excerpt'];
-                $result [$x] ['post_content'] = $row ['post_content'];
-                $result [$x] ['post_allow_comments'] = $row ['post_allow_comments'];
-                $result [$x] ['post_sticky'] = $row ['post_sticky'];
-    			$result [$x] ['post_date'] = unix_to_human_date($row ['post_date']);
-    			$result [$x] ['post_status'] = $row ['post_status'];
-                $result [$x] ['post_permalink'] = $this->permalinks->get_post_permalinks($row ['post_id'],$row ['post_date'],$row ['post_slug']);
-    			$x ++;
-    		}
-    		return $result;
-        }
+        if ($query->num_rows() > 0)	{
+			$result = $query->result_array();
+
+			foreach (array_keys($result) as $key){
+			   	$result[$key]['categories'] = $this->categories_model->get_categories_by_ids($this->get_post_categories($result[$key]['post_id']));
+			  	$result[$key]['comment_count'] = $this->db->where('post_id', $result[$key]['post_id'])->from($this->table_comments)->count_all_results();
+                $result[$key]['post_permalink']=$this->permalinks->get_post_permalinks($result[$key]['post_id'],$result[$key]['post_date'],$result[$key]['post_slug']);
+                $result[$key]['post_date']=unix_to_human_date($result[$key]['post_date']);
+			}
+			return $result;
+		}
 	}
     public function get_posts_limit($limit,$offset,$post_status=NULL) {
+        $this->db->select($this->table_posts.'.*,'.$this->table_users.'.user_display_name');
+		$this->db->from($this->table_posts);
+	 	$this->db->join($this->table_category_relationships, $this->table_posts.'.post_id = '.$this->table_category_relationships.'.post_id');
+	 	$this->db->join($this->table_categories, $this->table_category_relationships.'.category_id = '.$this->table_categories.'.category_id');
+		$this->db->join($this->table_users,$this->table_posts.'.user_id = '.$this->table_users.'.user_id');
+
         if($post_status){
             $this->db->where('post_status',$post_status);
         }
-        $this->db->order_by('post_date', 'DESC');
+        $this->db->order_by($this->table_posts.'.post_sticky', 'DESC');
+        $this->db->order_by($this->table_posts.'.post_date', 'DESC');
         $this->db->limit($limit, $offset);
-		$query = $this->db->get($this->table_posts);
-		if ($query->num_rows() > 0){
-    		$x = 0;
-    		foreach ( $query->result_array () as $row ) {
-    			$result [$x] ['post_id'] = $row ['post_id'];
-    			$result [$x] ['post_title'] = $row ['post_title'];
-                $result [$x] ['post_excerpt'] = $row ['post_excerpt'];
-                $result [$x] ['post_content'] = $row ['post_content'];
-    			$result [$x] ['post_date'] = unix_to_human_date($row ['post_date']);
-    			$result [$x] ['post_status'] = $row ['post_status'];
-                $result [$x] ['post_permalink'] = $this->permalinks->get_post_permalinks($row ['post_id'],$row ['post_date'],$row ['post_slug']);
-    			$x ++;
-    		}
-    		return $result;
-        }
+		$query = $this->db->get();
+		if ($query->num_rows() > 0)	{
+			$result = $query->result_array();
+
+			foreach (array_keys($result) as $key){
+			   	$result[$key]['categories'] = $this->categories_model->get_categories_by_ids($this->get_post_categories($result[$key]['post_id']));
+			  	$result[$key]['comment_count'] = $this->db->where('post_id', $result[$key]['post_id'])->from($this->table_comments)->count_all_results();
+                $result[$key]['post_permalink']=$this->permalinks->get_post_permalinks($result[$key]['post_id'],$result[$key]['post_date'],$result[$key]['post_slug']);
+                $result[$key]['post_date']=unix_to_human_date($result[$key]['post_date']);
+			}
+			return $result;
+		}
 	}
     public function get_posts_count($post_status=NULL){
         if(!$post_status){

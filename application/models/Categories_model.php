@@ -5,15 +5,6 @@ class Categories_model extends CI_Model {
 
     public function __construct(){
         parent::__construct();
-
-        $config=array(
-            'table'=>$this->table_categories,
-            'field_id'=>'category_id',
-            'field_title'=>'category_name',
-            'field_slug'=>'category_slug'
-        );
-        $this->load->library('slug');
-        $this->slug->set_config($config);
     }
     public function addcategory(){
         $data = array(
@@ -45,6 +36,18 @@ class Categories_model extends CI_Model {
 		$result['category_slug']= $post->category_slug;
 		$result['post_count'] = 0;
 		return $result;
+	}
+    public function get_categories_by_ids($category_ids){
+		$this->db->where_in('category_id', $category_ids);
+		$query = $this->db->get($this->table_categories);
+
+		if ($query->num_rows() > 0){
+			$result=$query->result_array();
+            foreach (array_keys($result) as $key){
+			   	$result[$key]['category_permalink'] = $this->permalinks->get_category_permalinks($result[$key]['category_slug']);
+            }
+            return $result;
+		}
 	}
     public function get_category_by_slug($category_slug){
 	    $this->db->where('category_slug', $category_slug);

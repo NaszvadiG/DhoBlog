@@ -126,7 +126,7 @@ class Blog extends Frontend{
 		$this->data['paging']=$this->pagination->create_links();
 
 		$this->data['posts']=$this->posts_model->get_posts_by_category($category_slug,$limit,$offset);
-		$this->data['container']="blog/home";
+		$this->data['container']="blog/category";
 
 		$this->themes->load($this->data);
 	}
