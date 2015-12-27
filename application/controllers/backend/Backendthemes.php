@@ -19,6 +19,7 @@ class Backendthemes extends Backend {
 
         if($this->input->post('activate')){
             $this->themes->switch_theme('backend');
+            $this->sites->get_site_settings();
         }
 
         $data['themes']=$this->themes->get_themes('backend');

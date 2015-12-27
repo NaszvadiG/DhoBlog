@@ -105,32 +105,7 @@ class Dhoblog extends CI_Controller{
                 $this->table_tags=$this->blog_id.'_tags';
                 $this->table_tag_relationships=$this->blog_id.'_tag_relationships';
             }
-
-            $settings=$this->sites->get_site_settings();
-            $this->blog_title=$settings['blog_title'];
-            $this->blog_description=$settings['blog_description'];
-            $this->blog_tagline=$settings['blog_tagline'];
-            $this->blog_keywords=$settings['blog_keywords'];
-            $this->blog_url=$settings['blog_url'];
-            $this->backend_theme=$settings['backend_theme'];
-            $this->frontend_theme=$settings['frontend_theme'];
-            $this->allow_registration=$settings['allow_registration'];
-            $this->admin_email=$settings['admin_email'];
-            $this->default_category=$settings['default_category'];
-            $this->default_allow_comments=$settings['default_allow_comments'];
-            $this->post_per_page=$settings['post_per_page'];
-            $this->blog_offline=$settings['blog_offline'];
-            $this->offline_reason=$settings['offline_reason'];
-            $this->date_format=$settings['date_format'];
-            $this->time_format=$settings['time_format'];
-            $this->comments_moderation=$settings['comments_moderation'];
-            $this->post_permalink=$settings['post_permalink'];
-            $this->category_permalink=$settings['category_permalink'];
-            $this->tag_permalink=$settings['tag_permalink'];
-            $this->page_permalink=$settings['page_permalink'];
-            $this->comments_registration=$settings['comments_registration'];
-            $this->default_role=$settings['default_role'];
-            $this->timezone=$settings['timezone'];
+            $this->sites->get_site_settings();
 
             if($this->blog_status=="spam"){
                 $this->data['title']="Site Spammed!";

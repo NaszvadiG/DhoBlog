@@ -17,11 +17,10 @@ class Permalinks extends Backend {
     }
     public function index(){
 	    $data['title']="Permalinks";
-        $data['permalinks']=$this->permalinks_model->get_permalink_settings();
 
         if ($this->input->post('submit')) {
             $this->permalinks_model->edit_permalink_settings();
-            $data['permalinks']=$this->permalinks_model->get_permalink_settings();
+            $this->sites->get_site_settings();
 		}
         $data['container']="admin/permalinks";
         $this->themes->load($data,TRUE);

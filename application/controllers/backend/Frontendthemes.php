@@ -19,6 +19,7 @@ class Frontendthemes extends Backend {
 
         if($this->input->post('activate')){
             $this->themes->switch_theme('frontend');
+            $this->sites->get_site_settings();
         }
 
         $data['themes']=$this->themes->get_themes('frontend');
