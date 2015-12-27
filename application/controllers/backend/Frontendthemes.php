@@ -1,6 +1,6 @@
 <?php
 /**
- * Permalinks Controller
+ * Frontendthemes Controller
  *
  * @author Mutasim Ridlo, S.Kom (http://www.ridho.id)
  * @copyright Copyright (c) 2015, Dhosoft (http://www.dhosoft.com)
@@ -9,21 +9,21 @@
  */
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Permalinks extends Backend {
+class Frontendthemes extends Backend {
 
     public function __construct(){
         parent::__construct();
-        $this->load->model('permalinks_model');
     }
     public function index(){
-	    $data['title']="Permalinks";
+        $data['title']="Frontend Themes";
 
-        if ($this->input->post('submit')) {
-            $this->permalinks_model->edit_permalink_settings();
+        if($this->input->post('activate')){
+            $this->themes->switch_theme('frontend');
             $this->sites->get_site_settings();
-		}
-        $data['container']="admin/permalinks";
+        }
+
+        $data['themes']=$this->themes->get_themes('frontend');
+        $data['container']="admin/frontend";
         $this->themes->load($data,TRUE);
 	}
-
 }

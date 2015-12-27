@@ -1,4 +1,12 @@
 <?php
+/**
+ * Blog Controller
+ *
+ * @author Mutasim Ridlo, S.Kom (http://www.ridho.id)
+ * @copyright Copyright (c) 2015, Dhosoft (http://www.dhosoft.com)
+ * @license http://opensource.org/licenses/MIT MIT License
+ * @link http://www.dhosoft.com
+ */
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Blog extends Frontend{
@@ -38,7 +46,7 @@ class Blog extends Frontend{
 		$this->pagination->initialize($config);
 		$this->data['paging']=$this->pagination->create_links();
 
-		$this->data['posts']=$this->posts_model->get_posts_limit($limit,0,'publish');
+		$this->data['posts']=$this->posts_model->get_posts_limit($limit,0,'publish',TRUE);
         $this->data['container']="blog/home";
 
         $this->themes->load($this->data);
@@ -78,7 +86,7 @@ class Blog extends Frontend{
 		$this->pagination->initialize($config);
 		$this->data['paging']=$this->pagination->create_links();
 
-		$this->data['posts']=$this->posts_model->get_posts_limit($limit,$offset,'publish');
+		$this->data['posts']=$this->posts_model->get_posts_limit($limit,$offset,'publish',TRUE);
         $this->data['container']="blog/home";
 
 		$this->themes->load($this->data);

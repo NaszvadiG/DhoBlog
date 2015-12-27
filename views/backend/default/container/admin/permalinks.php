@@ -16,7 +16,7 @@
                 <div class="form-group">
                     <div class="col-md-3">
                      <label>
-                        <input name="post_permalink" value="datename" type="radio" <?php if($permalinks['post_permalink']==="datename"): echo 'checked="checked"';endif;?>>
+                        <input name="post_permalink" value="datename" type="radio" <?php if($this->post_permalink==="datename"): echo 'checked="checked"';endif;?>>
                         Date and name
                         </label>
                     </div>
@@ -27,7 +27,7 @@
                 <div class="form-group">
                     <div class="col-md-3">
                      <label>
-                        <input name="post_permalink" value="numeric" type="radio" <?php if($permalinks['post_permalink']==="numeric"): echo 'checked="checked"';endif;?>>
+                        <input name="post_permalink" value="numeric" type="radio" <?php if($this->post_permalink==="numeric"): echo 'checked="checked"';endif;?>>
                         Numeric
                         </label>
                     </div>
@@ -38,7 +38,7 @@
                 <div class="form-group">
                     <div class="col-md-3">
                     <label>
-                        <input name="post_permalink" value="postname" type="radio" <?php if($permalinks['post_permalink']==="postname"): echo 'checked="checked"';endif;?>>
+                        <input name="post_permalink" value="postname" type="radio" <?php if($this->post_permalink==="postname"): echo 'checked="checked"';endif;?>>
                         Postname
                          </label>
                     </div>
@@ -54,7 +54,7 @@
                 <div class="form-group">
                     <div class="col-md-3">
                     <label>
-                        <input name="category_permalink" value="category" type="radio" <?php if($permalinks['category_permalink']==="category"): echo 'checked="checked"';endif;?>>
+                        <input name="category_permalink" value="category" type="radio" <?php if($this->category_permalink==="category"): echo 'checked="checked"';endif;?>>
                         Default
                         </label>
                     </div>
@@ -65,12 +65,12 @@
                 <div class="form-group">
                     <div class="col-md-3">
                     <label>
-                        <input name="category_permalink" value="category_custom" type="radio" <?php if($permalinks['category_permalink']!="category"): echo 'checked="checked"';endif;?>>
+                        <input name="category_permalink" value="category_custom" type="radio" <?php if($this->category_permalink!="category"): echo 'checked="checked"';endif;?>>
                         Custom Structure
                         </label>
                     </div>
                     <div class="col-md-9">
-                        <span class="label label-default"><?php echo base_url();?></span> <input name="category_custom_permalink" type="text" id="category_custom_permalink" value="<?php if($permalinks['category_permalink']!="category"): echo $permalinks['category_permalink'];endif;?>"> <span class="label label-default">/sample-category</span>
+                        <span class="label label-default"><?php echo base_url();?></span> <input name="category_custom_permalink" type="text" id="category_custom_permalink" value="<?php if($this->category_permalink!="category"): echo $this->category_permalink;endif;?>"> <span class="label label-default">/sample-category</span>
                     </div>
                 </div>
             </div>
@@ -81,7 +81,7 @@
                 <div class="form-group">
                     <div class="col-md-3">
                     <label>
-                        <input name="page_permalink" value="page" type="radio" <?php if($permalinks['page_permalink']==="page"): echo 'checked="checked"';endif;?>>
+                        <input name="page_permalink" value="page" type="radio" <?php if($this->page_permalink==="page"): echo 'checked="checked"';endif;?>>
                         Default
                         </label>
                     </div>
@@ -92,12 +92,12 @@
                 <div class="form-group">
                     <div class="col-md-3">
                     <label>
-                        <input name="page_permalink" value="page_custom" type="radio" <?php if($permalinks['page_permalink']!="page"): echo 'checked="checked"';endif;?>>
+                        <input name="page_permalink" value="page_custom" type="radio" <?php if($this->page_permalink!="page"): echo 'checked="checked"';endif;?>>
                         Custom Structure
                         </label>
                     </div>
                     <div class="col-md-9">
-                        <span class="label label-default"><?php echo base_url();?></span> <input name="page_custom_permalink" type="text" id="page_custom_permalink" value="<?php if($permalinks['page_permalink']!="page"): echo $permalinks['page_permalink'];endif;?>"> <span class="label label-default">/sample-page.html</span>
+                        <span class="label label-default"><?php echo base_url();?></span> <input name="page_custom_permalink" type="text" id="page_custom_permalink" value="<?php if($this->page_permalink!="page"): echo $this->page_permalink;endif;?>"> <span class="label label-default">/sample-page.html</span>
                     </div>
                 </div>
             </div>
@@ -108,7 +108,7 @@
                 <div class="form-group">
                     <div class="col-md-3">
                     <label>
-                        <input name="tag_permalink" value="tag" type="radio" <?php if($permalinks['tag_permalink']==="tag"): echo 'checked="checked"';endif;?>>
+                        <input name="tag_permalink" value="tag" type="radio" <?php if($this->tag_permalink==="tag"): echo 'checked="checked"';endif;?>>
                         Default
                         </label>
                     </div>
@@ -119,12 +119,12 @@
                 <div class="form-group">
                     <div class="col-md-3">
                     <label>
-                        <input name="tag_permalink" value="tag_custom" type="radio" <?php if($permalinks['tag_permalink']!="tag"): echo 'checked="checked"';endif;?>>
+                        <input name="tag_permalink" value="tag_custom" type="radio" <?php if($this->tag_permalink!="tag"): echo 'checked="checked"';endif;?>>
                         Custom Structure
                         </label>
                     </div>
                     <div class="col-md-9">
-                        <span class="label label-default"><?php echo base_url();?></span> <input name="tag_custom_permalink" type="text" id="tag_custom_permalink" value="<?php if($permalinks['tag_permalink']!="tag"): echo $permalinks['tag_permalink'];endif;?>"> <span class="label label-default">/sample-tag</span>
+                        <span class="label label-default"><?php echo base_url();?></span> <input name="tag_custom_permalink" type="text" id="tag_custom_permalink" value="<?php if($this->tag_permalink!="tag"): echo $this->tag_permalink;endif;?>"> <span class="label label-default">/sample-tag</span>
                     </div>
                 </div>
             </div>

@@ -65,6 +65,30 @@ class Sites {
         return $this->CI->sites_model->get_site($domain);
     }
     public function get_site_settings(){
-        return $this->CI->sites_model->get_site_settings();
+        $settings=$this->CI->sites_model->get_site_settings();
+        $this->CI->blog_title=$settings['blog_title'];
+        $this->CI->blog_description=$settings['blog_description'];
+        $this->CI->blog_tagline=$settings['blog_tagline'];
+        $this->CI->blog_keywords=$settings['blog_keywords'];
+        $this->CI->blog_url=$settings['blog_url'];
+        $this->CI->backend_theme=$settings['backend_theme'];
+        $this->CI->frontend_theme=$settings['frontend_theme'];
+        $this->CI->allow_registration=$settings['allow_registration'];
+        $this->CI->admin_email=$settings['admin_email'];
+        $this->CI->default_category=$settings['default_category'];
+        $this->CI->default_allow_comments=$settings['default_allow_comments'];
+        $this->CI->post_per_page=$settings['post_per_page'];
+        $this->CI->blog_offline=$settings['blog_offline'];
+        $this->CI->offline_reason=$settings['offline_reason'];
+        $this->CI->date_format=$settings['date_format'];
+        $this->CI->time_format=$settings['time_format'];
+        $this->CI->comments_moderation=$settings['comments_moderation'];
+        $this->CI->post_permalink=$settings['post_permalink'];
+        $this->CI->category_permalink=$settings['category_permalink'];
+        $this->CI->tag_permalink=$settings['tag_permalink'];
+        $this->CI->page_permalink=$settings['page_permalink'];
+        $this->CI->comments_registration=$settings['comments_registration'];
+        $this->CI->default_role=$settings['default_role'];
+        $this->CI->timezone=$settings['timezone'];
     }
 }
