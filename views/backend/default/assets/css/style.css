@@ -24,3 +24,6 @@ tr:hover .row-actions,
 div.comment-item:hover .row-actions {
 	visibility: visible;
 }
+.themeswitch {
+  padding-right: 5px;
+}
