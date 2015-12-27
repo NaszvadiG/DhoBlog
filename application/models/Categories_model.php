@@ -29,13 +29,11 @@ class Categories_model extends CI_Model {
 	    $this->db->where('category_id', $category_id);
         $query=$this->db->get($this->table_categories);
 
-		$post=$query->row();
-		$result['category_id']= $post->category_id;
-		$result['category_name']= $post->category_name;
-		$result['category_description']= $post->category_description;
-		$result['category_slug']= $post->category_slug;
-		$result['post_count'] = 0;
-		return $result;
+		if ($query->num_rows() ==1)	{
+			$result = $query->row_array();
+            $result['post_count']=$this->get_posts_count_in_category($result['category_slug']);
+            return $result;
+        }
 	}
     public function get_categories_by_ids($category_ids){
 		$this->db->where_in('category_id', $category_ids);
@@ -53,50 +51,40 @@ class Categories_model extends CI_Model {
 	    $this->db->where('category_slug', $category_slug);
         $query=$this->db->get($this->table_categories);
 
-		$post=$query->row();
-		$result['category_id']= $post->category_id;
-		$result['category_name']= $post->category_name;
-		$result['category_description']= $post->category_description;
-		$result['category_slug']= $post->category_slug;
-		$result['post_count'] = 0;
-		return $result;
+		if ($query->num_rows() ==1)	{
+			$result = $query->row_array();
+            $result['post_count']=$this->get_posts_count_in_category($result['category_slug']);
+            return $result;
+        }
 	}
     public function get_categories_limit($limit,$offset){
 		$this->db->order_by('category_name', 'ASC');
         $this->db->limit($limit, $offset);
 		$query = $this->db->get($this->table_categories);
 
-        if ($query->num_rows() > 0){
-    		$x = 0;
-    		foreach ( $query->result_array () as $row ) {
-    			$result [$x] ['category_id'] = $row ['category_id'];
-    			$result [$x] ['category_name'] = $row ['category_name'];
-    			$result [$x] ['category_description'] = $row ['category_description'];
-    			$result [$x] ['post_count']  = $this->get_posts_count_in_category($row ['category_slug']);
-                $result [$x] ['category_slug'] = $row ['category_slug'];
-                $result [$x] ['category_permalink'] = $this->permalinks->get_category_permalinks($row ['category_slug']);
-    			$x ++;
-    		}
-    		return $result;
-        }
+        if ($query->num_rows() > 0)	{
+			$result = $query->result_array();
+
+			foreach (array_keys($result) as $key){
+			  	$result[$key]['post_count']  = $this->get_posts_count_in_category($result[$key] ['category_slug']);
+                $result[$key]['category_permalink'] = $this->permalinks->get_category_permalinks($result[$key] ['category_slug']);
+			}
+			return $result;
+		}
 	}
     public function get_categories(){
 		$this->db->order_by('category_name', 'ASC');
 		$query = $this->db->get($this->table_categories);
 
-        if ($query->num_rows() > 0){
-    		$x = 0;
-    		foreach ( $query->result_array () as $row ) {
-    			$result [$x] ['category_id'] = $row ['category_id'];
-    			$result [$x] ['category_name'] = $row ['category_name'];
-    			$result [$x] ['category_description'] = $row ['category_description'];
-    			$result [$x] ['post_count']  = $this->get_posts_count_in_category($row ['category_slug']);
-                $result [$x] ['category_slug'] = $row ['category_slug'];
-                $result [$x] ['category_permalink'] = $this->permalinks->get_category_permalinks($row ['category_slug']);
-    			$x ++;
-    		}
-    		return $result;
-        }
+        if ($query->num_rows() > 0)	{
+			$result = $query->result_array();
+
+			foreach (array_keys($result) as $key){
+			  	$result[$key]['post_count']  = $this->get_posts_count_in_category($result[$key] ['category_slug']);
+                $result[$key]['category_permalink'] = $this->permalinks->get_category_permalinks($result[$key] ['category_slug']);
+			}
+			return $result;
+		}
 	}
     public function get_posts_count_in_category($category_slug){
         $this->db->select('count(*) as post_count');

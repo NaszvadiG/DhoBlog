@@ -47,29 +47,25 @@ class Pages_model extends CI_Model {
 	    $this->db->where('page_id', $page_id);
         $query=$this->db->get($this->table_pages);
 
-		$page=$query->row();
-		$result['page_id']= $page->page_id;
-		$result['page_title']= $page->page_title;
-		$result['page_content']= $page->page_content;
-        $result['page_allow_comments']= $page->page_allow_comments;
-        $result['page_date']= unix_to_human_date($page->page_date);
-		$result['page_status'] = $page->page_status;
-        $result['page_permalink'] = $this->permalinks->get_page_permalinks($page->page_slug);
-		return $result;
+        if ($query->num_rows() ==1)	{
+			$result = $query->row_array();
+
+            $result['page_permalink'] = $this->permalinks->get_page_permalinks($result['page_slug']);
+            $result['page_date']=unix_to_human_date($result['page_date']);
+			return $result;
+		}
 	}
     public function get_page_by_slug($page_slug){
         $this->db->where('page_slug', $page_slug);
         $query=$this->db->get($this->table_pages);
 
-		$page=$query->row();
-		$result['page_id']= $page->page_id;
-		$result['page_title']= $page->page_title;
-		$result['page_content']= $page->page_content;
-        $result['page_allow_comments']= $page->page_allow_comments;
-        $result['page_date']= unix_to_human_date($page->page_date);
-		$result['page_status'] = $page->page_status;
-        $result['page_permalink'] = $this->permalinks->get_page_permalinks($page->page_slug);
-		return $result;
+		if ($query->num_rows() ==1)	{
+			$result = $query->row_array();
+
+            $result['page_permalink'] = $this->permalinks->get_page_permalinks($result['page_slug']);
+            $result['page_date']=unix_to_human_date($result['page_date']);
+			return $result;
+		}
 	}
     public function get_pages_limit($limit,$offset,$page_status=NULL) {
         if($page_status){
@@ -78,19 +74,16 @@ class Pages_model extends CI_Model {
         $this->db->order_by('page_date', 'DESC');
         $this->db->limit($limit, $offset);
 		$query = $this->db->get($this->table_pages);
-		if ($query->num_rows() > 0){
-    		$x = 0;
-    		foreach ( $query->result_array () as $row ) {
-    			$result [$x] ['page_id'] = $row ['page_id'];
-    			$result [$x] ['page_title'] = $row ['page_title'];
-                $result [$x] ['page_content'] = $row ['page_content'];
-    			$result [$x] ['page_date'] = unix_to_human_date($row ['page_date']);
-    			$result [$x] ['page_status'] = $row ['page_status'];
-                $result [$x] ['page_permalink'] = $this->permalinks->get_page_permalinks($row ['page_slug']);
-    			$x ++;
-    		}
-    		return $result;
-        }
+
+        if ($query->num_rows() > 0)	{
+			$result = $query->result_array();
+
+			foreach (array_keys($result) as $key){
+			   	$result[$key]['page_permalink'] = $this->permalinks->get_page_permalinks($result[$key]['page_slug']);
+                $result[$key]['page_date']=unix_to_human_date($result[$key]['page_date']);
+			}
+			return $result;
+		}
 	}
     public function get_pages($page_status=NULL) {
         if($page_status){
@@ -98,19 +91,16 @@ class Pages_model extends CI_Model {
         }
         $this->db->order_by('page_order', 'ASC');
 		$query = $this->db->get($this->table_pages);
-		if ($query->num_rows() > 0){
-    		$x = 0;
-    		foreach ( $query->result_array () as $row ) {
-    			$result [$x] ['page_id'] = $row ['page_id'];
-    			$result [$x] ['page_title'] = $row ['page_title'];
-                $result [$x] ['page_content'] = $row ['page_content'];
-    			$result [$x] ['page_date'] = unix_to_human_date($row ['page_date']);
-    			$result [$x] ['page_status'] = $row ['page_status'];
-                $result [$x] ['page_permalink'] = $this->permalinks->get_page_permalinks($row ['page_slug']);
-    			$x ++;
-    		}
-    		return $result;
-        }
+
+        if ($query->num_rows() > 0)	{
+			$result = $query->result_array();
+
+			foreach (array_keys($result) as $key){
+			   	$result[$key]['page_permalink'] = $this->permalinks->get_page_permalinks($result[$key]['page_slug']);
+                $result[$key]['page_date']=unix_to_human_date($result[$key]['page_date']);
+			}
+			return $result;
+		}
 	}
     public function get_pages_count($page_status=NULL){
         if(!$page_status){

@@ -43,7 +43,7 @@
                     <textarea class="form-control" rows="10" name="comment_content" placeholder = "Message" ></textarea>
                 </div>
                 </div>
-                <input type="submit" name="dsubmit" value="Submit Comment">
+                <input class="btn btn-primary" type="submit" name="submit" value="Submit Comment">
                 </form>
                 </div>
         	<?php }}?>
