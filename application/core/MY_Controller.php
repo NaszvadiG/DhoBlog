@@ -138,14 +138,14 @@ class Dhoblog extends CI_Controller{
                 $this->data['reason']="Reason: Un-natural posting!";
                 $this->data['container']="error/status";
 		        $this->themes->load($this->data);
-                exit;
+                return;
             }elseif($this->blog_status=="deleted"){
                 $this->data['title']="Site Deleted!";
                 $this->data['status']="This site has been deleted!";
                 $this->data['reason']="Reason: TOS Violation!";
                 $this->data['container']="error/status";
 		        $this->themes->load($this->data);
-                exit;
+                return;
             }
         }else{
             $new=$this->sites->get_subdomain(base_url());

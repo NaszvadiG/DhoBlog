@@ -10,18 +10,13 @@
                 <div class="blog-post">
 				<h3 class="blog-post-title"><a href="<?php echo $post['post_permalink'];?>"><?php echo $post['post_title'];?></a></h3>
 				<p class="blog-post-meta">
-				<i class="fa fa-calendar"></i> <a href="<?php echo $post['post_permalink'];?>"><?php echo $post['post_date'];?></a> <i class="fa fa-male"></i> <a href="<?php echo base_url();?>about">ridho</a> <i class="fa fa-folder"></i>
-                <!--<?php
-                foreach ($all_categories as $cat){
-                	if(isset($post_cat[$cat['id']])){
-                		if($cat['id']==$post_cat[$cat['id']]){
-                			?>
-                			<a href="<?php echo base_url();?>category/<?php echo $cat['id'];?>/<?php echo url_title($cat['name'],'-',true);?>"><?php echo $cat['name'];?></a>
-                			<?php
-                		}
-                	}
-                }
-                ?>-->
+				Posted in
+                <?php
+                foreach ($post['categories'] as $cat){
+        			?>
+        			<a href="<?php echo $cat['category_permalink'];?>"><?php echo $cat['category_name'];?></a>,
+        			<?php } ?>
+                by <a href="#"><?php echo $post['user_display_name']?></a>, at <a href="<?php echo $post['post_permalink'];?>"><?php echo $post['post_date'];?></a>, Comments: <?php echo $post['comment_count'];?>
 				</p>
 				<p><?php echo $post['post_excerpt'];?></p>
 				<p>

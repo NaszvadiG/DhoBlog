@@ -10,14 +10,13 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Slug {
-    public $table='posts';
-	public $field_id='post_id';
-	public $field_slug='post_slug';
-	public $field_title='post_title';
+    protected $table;
+	protected $field_id;
+	protected $field_slug;
+	protected $field_title;
 
-    public function __construct($config=array()){
+    public function __construct(){
 		$this->CI =& get_instance();
-        $this->set_config($config);
 	}
     public function set_config($config = array()){
 		if (!empty($config)){
