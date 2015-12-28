@@ -90,5 +90,9 @@ class Sites {
         $this->CI->comments_registration=$settings['comments_registration'];
         $this->CI->default_role=$settings['default_role'];
         $this->CI->timezone=$settings['timezone'];
+        $this->CI->posts_per_page=$settings['posts_per_page'];
+        $this->CI->feed_show_count=$settings['feed_show_count'];
+        $this->CI->feed_use_excerpt=$settings['feed_use_excerpt'];
+        $this->CI->search_engine_visibility=$settings['search_engine_visibility'];
     }
 }

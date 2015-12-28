@@ -14,16 +14,6 @@ class Permalinks_model extends CI_Model {
     public function __construct(){
         parent::__construct();
     }
-    public function get_permalink_settings(){
-        $this->db->where_in('setting_name', array('post_permalink','category_permalink','page_permalink','tag_permalink'));
-
-        $query = $this->db->get($this->table_settings);
-        $result=array();
-		foreach ( $query->result_array () as $row ) {
-			$result [$row['setting_name']] = $row['setting_value'];
-		}
-		return $result;
-    }
     function edit_permalink_settings(){
         $this->db->set('setting_value', $this->input->post('post_permalink'));
         $this->db->where('setting_name', 'post_permalink');

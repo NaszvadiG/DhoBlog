@@ -96,6 +96,9 @@
             </div>
             <div class="list-group">
                 <a class="list-group-item <?php if($this->uri->segment(2)=="general"):?>active<?php endif;?>" href="<?php echo base_url('dashboard/general')?>">General</a>
+                <a class="list-group-item <?php if($this->uri->segment(2)=="maintenance"):?>active<?php endif;?>" href="<?php echo base_url('dashboard/maintenance')?>">Maintenance</a>
+                <a class="list-group-item <?php if($this->uri->segment(2)=="writing"):?>active<?php endif;?>" href="<?php echo base_url('dashboard/writing')?>">Writing</a>
+                <a class="list-group-item <?php if($this->uri->segment(2)=="reading"):?>active<?php endif;?>" href="<?php echo base_url('dashboard/reading')?>">Reading</a>
 				<a class="list-group-item <?php if($this->uri->segment(2)=="permalinks"):?>active<?php endif;?>" href="<?php echo base_url('dashboard/permalinks')?>">Permalinks</a>
             </div>
         </div>
