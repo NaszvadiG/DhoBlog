@@ -37,6 +37,10 @@ class Dhoblog extends CI_Controller{
     public $comments_registration;
     public $default_role;
     public $timezone;
+    public $posts_per_page;
+    public $feed_show_count;
+    public $feed_use_excerpt;
+    public $search_engine_visibility;
 
     //Dynamic Tables
     public $table_categories;

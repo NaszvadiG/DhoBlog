@@ -17,6 +17,7 @@
                             <th>Title</th>
                             <th>Categories</th>
                             <th>Date</th>
+                            <th><i class="fa fa-comments"></i></th>
                             <th>Status</th>
                         </tr>
                     </thead>
@@ -33,9 +34,15 @@
                             </div>
                             </td>
                             <td>
-
+                             <?php
+                             $i=0 ;
+                                foreach ($post['categories'] as $cat){?>
+                    			<a href="<?php echo base_url('dashboard/editcategory/'.$cat['category_id']);?>"><?php echo $cat['category_name'];?></a><?php if ($i < count($post['categories']) - 1){
+                        		echo ',';
+                        		}$i++;} ?>
                             </td>
                             <td><?php echo $post['post_date'];?></td>
+                            <td class="text-center"><?php echo $post['comment_count'];?></td>
                             <td><?php if($post['post_status']=="publish"){
                                     echo "Published";
                                 }elseif($post['post_status']=="pending"){
