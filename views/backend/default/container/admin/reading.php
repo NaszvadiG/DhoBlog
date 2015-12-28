@@ -1,9 +1,9 @@
 <div class="col-md-9">
   <div class="page-header">
-    <h2 class="pull-left">General</h2>
+    <h2 class="pull-left">Reading</h2>
     <ol class="breadcrumb pull-right where-am-i">
       <li><a href="#">Settings</a></li>
-      <li class="active">General</li>
+      <li class="active">Reading</li>
     </ol>
     <div class="clearfix"></div>
   </div>
