@@ -82,7 +82,8 @@ $route['dashboard/deletemenu/(:num)']= 'backend/menus/deletemenu/$1';
 $route['dashboard/backend']= 'backend/backendthemes/index';
 $route['dashboard/frontend']= 'backend/frontendthemes/index';
 $route['dashboard/general']= 'backend/general/index';
-$route['dashboard/reading']= 'backend/reading/index';  
+$route['dashboard/reading']= 'backend/reading/index';
+$route['dashboard/maintenance']= 'backend/maintenance/index';
 $route['dashboard/permalinks']= 'backend/permalinks/index';
 
 $route['posts/(:num)'] = "blog/posts/$1";
