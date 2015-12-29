@@ -13,6 +13,9 @@ class Blog extends Frontend{
 
     public function __construct(){
         parent::__construct();
+        $this->load->helper('tools');
+        $this->load->library('user_agent');
+        $this->load->model('comments_model');
     }
     public function index(){
 		$page=$this->uri->segment(2);
@@ -139,6 +142,24 @@ class Blog extends Frontend{
 		$this->themes->load($this->data);
 	}
     public function post($field1=NULL,$field2=NULL,$field3=NULL,$field4=NULL){
+        $validation_rules=array(
+            array(
+                'field' => 'comment_author',
+                'label' => 'Name',
+                'rules' => 'required'
+            ),
+            array(
+                'field' => 'comment_author_email',
+                'label' => 'Email',
+                'rules' => 'required|valid_email'
+            ),
+            array(
+                'field' => 'comment_content',
+                'label' => 'Message',
+                'rules' => 'required'
+            )
+        );
+
         $permalink=$this->post_permalink;
         if($permalink=="datename"){
             $post=$this->posts_model->get_post_by_date_slug($field1,$field2,$field3,$field4);
@@ -147,8 +168,18 @@ class Blog extends Frontend{
         }elseif($permalink=="postname"){
             $post=$this->posts_model->get_post_by_slug($field1);
         }
+
+        $this->form_validation->set_rules($validation_rules);
+        if ($this->form_validation->run() === TRUE) {
+            $this->comments_model->add_comment($post['post_id']);
+			redirect(current_url(), 'refresh');
+        }
+
         $this->data['title']=$post['post_title'];
     	$this->data['post']=$post;
+        if($post['post_allow_comments']==1){
+            $this->data['comments']=$this->comments_model->get_comments_by_post_id($post['post_id']);
+        }
 
         $this->data['container']="blog/post";
 		$this->themes->load($this->data);
