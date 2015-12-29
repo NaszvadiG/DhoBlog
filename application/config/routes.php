@@ -84,7 +84,7 @@ $route['dashboard/frontend']= 'backend/frontendthemes/index';
 $route['dashboard/general']= 'backend/general/index';
 $route['dashboard/writing']= 'backend/writing/index';
 $route['dashboard/reading']= 'backend/reading/index';
-$route['dashboard/discussion']= 'backend/discussion/index';   
+$route['dashboard/discussion']= 'backend/discussion/index';
 $route['dashboard/maintenance']= 'backend/maintenance/index';
 $route['dashboard/permalinks']= 'backend/permalinks/index';
 
