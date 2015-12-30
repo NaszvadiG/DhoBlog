@@ -26,12 +26,6 @@
                                             <label>Content</label>
                                             <textarea class="form-control" rows="20" name="content" id="postcontent"><?php echo $page['page_content'];?></textarea>
                                         </div>
-                                        <div class="form-group">
-                                        <label>Settings</label>
-                                        <div class="checkbox" >
-            							<label><input type="checkbox" <?php if ($page['page_allow_comments']==1):?> checked="checked" <?php endif;?> name="allow_comments">Allow Comments</label>
-            						    </div>
-                                </div>
                                 <div class="form-group">
                                             <label>Status</label>
                                             <select class="form-control" name="status">

@@ -21,8 +21,8 @@ class Sites_model extends CI_Model {
 
         if ($query->num_rows() ==1)	{
 			$result = $query->row_array();
-            $result['blog_registered'] = unix_to_human_date($result['blog_registered']);
-            $result['blog_last_updated'] = unix_to_human_date($result['blog_last_updated']);
+            $result['blog_registered'] = human_date($result['blog_registered']);
+            $result['blog_last_updated'] = human_date($result['blog_last_updated']);
 			return $result;
 		}
     }
@@ -33,8 +33,8 @@ class Sites_model extends CI_Model {
 			$result = $query->result_array();
 
 			foreach (array_keys($result) as $key){
-			   	$result[$key]['blog_registered'] = unix_to_human_date($result[$key]['blog_registered']);
-                $result[$key]['blog_last_updated'] = unix_to_human_date($result[$key]['blog_last_updated']);
+			   	$result[$key]['blog_registered'] = human_date($result[$key]['blog_registered']);
+                $result[$key]['blog_last_updated'] = human_date($result[$key]['blog_last_updated']);
 			}
 			return $result;
 		}

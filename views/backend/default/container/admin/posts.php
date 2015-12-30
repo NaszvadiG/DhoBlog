@@ -41,7 +41,7 @@
                         		echo ',';
                         		}$i++;} ?>
                             </td>
-                            <td><?php echo $post['post_date'];?></td>
+                            <td><?php echo human_datetime($post['post_date']);?></td>
                             <td class="text-center"><?php echo $post['comment_count'];?></td>
                             <td><?php if($post['post_status']=="publish"){
                                     echo "Published";

@@ -17,7 +17,7 @@ class Permalinks{
         $default_permalink=$this->CI->post_permalink;
         $permalink="";
         if($default_permalink=="datename"){
-            $permalink=base_url(unix_to_date_slug($post_date).'/'.$post_slug.'.html');
+            $permalink=base_url(date_slug($post_date).'/'.$post_slug.'.html');
         }elseif($default_permalink=="numeric"){
             $permalink=base_url('post/'.$post_id);
         }elseif($default_permalink=="postname"){

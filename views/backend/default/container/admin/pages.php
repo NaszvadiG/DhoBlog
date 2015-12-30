@@ -31,7 +31,7 @@
                             <a href="<?php echo base_url();?>dashboard/editpage/<?php echo $page['page_id'];?>">Edit</a> | <a href="<?php echo base_url()?>dashboard/deletepage/<?php echo $page['page_id'];?>" onclick='return confirm("Are you sure to Delete <?php echo $page['page_title'];?>?")'>Delete</a>
                             </div>
                             </td>
-                            <td><?php echo $page['page_date'];?></td>
+                            <td><?php echo human_datetime($page['page_date']);?></td>
                             <td><?php if($page['page_status']=="publish"){
                                     echo "Published";
                                 }elseif($page['page_status']=="pending"){

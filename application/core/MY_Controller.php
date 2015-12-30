@@ -126,6 +126,7 @@ class Dhoblog extends CI_Controller{
 		        $this->themes->load($this->data);
                 return;
             }
+            date_default_timezone_set($this->timezone);
         }else{
             $new=$this->sites->get_subdomain(base_url());
             redirect('http://'.$this->dhoblog_config['domain_current_site'].'/user/register?new='.$new);
