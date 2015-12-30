@@ -14,7 +14,7 @@
         			?>
         			<a href="<?php echo $cat['category_permalink'];?>"><?php echo $cat['category_name'];?></a>,
         			<?php } ?>
-                by <a href="#"><?php echo $post['user_display_name']?></a>, at <a href="<?php echo $post['post_permalink'];?>"><?php echo $post['post_date'];?></a>, Comments: <?php echo $post['comment_count'];?>
+                by <a href="#"><?php echo $post['user_display_name']?></a>, at <a href="<?php echo $post['post_permalink'];?>"><?php echo human_date($post['post_date']);?></a>, Comments: <?php echo $post['comment_count'];?>
 				</p>
 				<p><?php echo $post['post_content'];?></p>
                 </div>
@@ -32,7 +32,7 @@
                   </div>
                   <div class="media-body">
                     <h4 class="media-heading"><?php echo $comment['comment_author']?></h4>
-                    <p>at <?php echo $comment['comment_date'];?></p>
+                    <p>at <?php echo human_date($comment['comment_date']);?></p>
                     <p><?php echo $comment['comment_content'];?></p>
                   </div>
                 </div>

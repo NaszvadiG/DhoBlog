@@ -35,13 +35,7 @@ class Comments_model extends CI_Model {
 		$query = $this->db->get($this->table_comments);
 
 		if ($query->num_rows() > 0){
-			$result=$query->result_array();
-
-            foreach (array_keys($result) as $key){
-                $result[$key]['comment_date']=unix_to_human_date($result[$key]['comment_date']);
-			}
-			return $result;
-
+		   return $query->result_array();
 		}
     }
 }

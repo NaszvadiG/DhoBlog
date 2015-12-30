@@ -28,12 +28,6 @@
                                             <textarea class="form-control" rows="20" name="content" id="postcontent"></textarea>
                                         </div>
                                 <div class="form-group">
-                                        <label>Settings</label>
-                                        <div class="checkbox" >
-            							<label><input type="checkbox" checked="checked" name="allow_comments">Allow Comments</label>
-            						    </div>
-                                </div>
-                                <div class="form-group">
                                     <label>Status</label>
                                     <select class="form-control" name="status">
                                         <option value="publish">Published</option>

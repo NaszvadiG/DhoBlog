@@ -16,7 +16,7 @@
         			?>
         			<a href="<?php echo $cat['category_permalink'];?>"><?php echo $cat['category_name'];?></a>,
         			<?php } ?>
-                by <a href="#"><?php echo $post['user_display_name']?></a>, at <a href="<?php echo $post['post_permalink'];?>"><?php echo $post['post_date'];?></a>, Comments: <?php echo $post['comment_count'];?>
+                by <a href="#"><?php echo $post['user_display_name']?></a>, at <a href="<?php echo $post['post_permalink'];?>"><?php echo human_date($post['post_date']);?></a>, Comments: <?php echo $post['comment_count'];?>
 				</p>
 				<p><?php echo $post['post_excerpt'];?></p>
 				<p>

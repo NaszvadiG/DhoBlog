@@ -10,26 +10,25 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 if ( ! function_exists('unix_to_human_date')) {
-    function unix_to_human_date($timestamp){
-        return date('F j, Y',$timestamp);
-    }
-}
-if ( ! function_exists('unix_to_human_time')) {
-    function unix_to_human_time($timestamp){
-        return date('h:i:s a',$timestamp);
-    }
-}
-if ( ! function_exists('unix_to_date_slug')) {
-    function unix_to_date_slug($timestamp){
-        return date('Y/m/d',$timestamp);
-    }
-}
-if ( ! function_exists('get_current_date')) {
-    function get_current_time($blog_id){
+    function human_date($timestamp){
         $CI=& get_instance();
-        $CI->load->model('settings_model');
-        $timezone=$CI->settings_model->get_default_timezone($blog_id);
-        date_default_timezone_set($timezone);
-        return time();
+        return date($CI->date_format,$timestamp);
+    }
+}
+if ( ! function_exists('human_time')) {
+    function human_time($timestamp){
+        $CI=& get_instance();
+        return date($CI->time_format,$timestamp);
+    }
+}
+if ( ! function_exists('human_datetime')) {
+    function human_datetime($timestamp){
+        $CI=& get_instance();
+        return date($CI->date_format.' '.$CI->time_format,$timestamp);
+    }
+}
+if ( ! function_exists('date_slug')) {
+    function date_slug($timestamp){
+        return date('Y/m/d',$timestamp);
     }
 }

@@ -20,7 +20,7 @@
                 <?php if($post['post_sticky']==1){?>
                 <i class="fa fa-sticky-note"></i> Sticky
                 <?php }else{?>
-                at <a href="<?php echo $post['post_permalink'];?>"><?php echo $post['post_date'];?></a>
+                at <a href="<?php echo $post['post_permalink'];?>"><?php echo human_date($post['post_date']);?></a>
                 <?php }?>
                 , Comments: <?php echo $post['comment_count'];?>
 				</p>

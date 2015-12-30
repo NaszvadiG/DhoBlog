@@ -94,7 +94,6 @@ class Posts_model extends CI_Model {
           	$result['categories'] = $this->categories_model->get_categories_by_ids($this->get_post_categories($result['post_id']));
          	$result['comment_count'] = $this->db->where('post_id', $result['post_id'])->from($this->table_comments)->count_all_results();
             $result['post_permalink']=$this->permalinks->get_post_permalinks($result['post_id'],$result['post_date'],$result['post_slug']);
-            $result['post_date']=unix_to_human_date($result['post_date']);
 			return $result;
 		}
 	}
@@ -117,7 +116,6 @@ class Posts_model extends CI_Model {
           	$result['categories'] = $this->categories_model->get_categories_by_ids($this->get_post_categories($result['post_id']));
          	$result['comment_count'] = $this->db->where('post_id', $result['post_id'])->from($this->table_comments)->count_all_results();
             $result['post_permalink']=$this->permalinks->get_post_permalinks($result['post_id'],$result['post_date'],$result['post_slug']);
-            $result['post_date']=unix_to_human_date($result['post_date']);
 			return $result;
 		}
 	}
@@ -137,7 +135,6 @@ class Posts_model extends CI_Model {
           	$result['categories'] = $this->categories_model->get_categories_by_ids($this->get_post_categories($result['post_id']));
          	$result['comment_count'] = $this->db->where('post_id', $result['post_id'])->from($this->table_comments)->count_all_results();
             $result['post_permalink']=$this->permalinks->get_post_permalinks($result['post_id'],$result['post_date'],$result['post_slug']);
-            $result['post_date']=unix_to_human_date($result['post_date']);
 			return $result;
 		}
 	}
@@ -160,7 +157,6 @@ class Posts_model extends CI_Model {
 			   	$result[$key]['categories'] = $this->categories_model->get_categories_by_ids($this->get_post_categories($result[$key]['post_id']));
 			  	$result[$key]['comment_count'] = $this->db->where('post_id', $result[$key]['post_id'])->from($this->table_comments)->count_all_results();
                 $result[$key]['post_permalink']=$this->permalinks->get_post_permalinks($result[$key]['post_id'],$result[$key]['post_date'],$result[$key]['post_slug']);
-                $result[$key]['post_date']=unix_to_human_date($result[$key]['post_date']);
 			}
 			return $result;
 		}
@@ -186,7 +182,6 @@ class Posts_model extends CI_Model {
 			   	$result[$key]['categories'] = $this->categories_model->get_categories_by_ids($this->get_post_categories($result[$key]['post_id']));
 			  	$result[$key]['comment_count'] = $this->db->where('post_id', $result[$key]['post_id'])->from($this->table_comments)->count_all_results();
                 $result[$key]['post_permalink']=$this->permalinks->get_post_permalinks($result[$key]['post_id'],$result[$key]['post_date'],$result[$key]['post_slug']);
-                $result[$key]['post_date']=unix_to_human_date($result[$key]['post_date']);
 			}
 			return $result;
 		}
