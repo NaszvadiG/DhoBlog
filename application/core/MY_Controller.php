@@ -72,7 +72,7 @@ class Dhoblog extends CI_Controller{
 
         $this->load->model(array('categories_model','posts_model','menus_model','pages_model','users_model','sites_model'));
         $this->load->library(array('themes','pagination','permalinks','form_validation','sites'));
-        $this->load->helper('url','permissions');
+        $this->load->helper('url','permissions','datetime');
 
         $this->output->set_header('X-XSS-Protection: 1; mode=block');
 		$this->output->set_header('X-Frame-Options: DENY');

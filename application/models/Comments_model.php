@@ -38,4 +38,24 @@ class Comments_model extends CI_Model {
 		   return $query->result_array();
 		}
     }
+    public function get_comments_limit($limit, $offset) {
+        $this->db->select($this->table_comments.'.*,'.$this->table_posts.'.post_id,'.$this->table_posts.'.post_title,'.$this->table_posts.'.post_date,'.$this->table_posts.'.post_slug');
+		$this->db->from($this->table_comments);
+        $this->db->join($this->table_posts,$this->table_comments.'.post_id = '.$this->table_posts.'.post_id');
+        $this->db->order_by('comment_date', 'DESC');
+        $this->db->limit($limit, $offset);
+		$query = $this->db->get();
+
+        if ($query->num_rows() > 0)	{
+			$result= $query->result_array();
+
+            foreach (array_keys($result) as $key){
+                $result[$key]['post_permalink']=$this->permalinks->get_post_permalinks($result[$key]['post_id'],$result[$key]['post_date'],$result[$key]['post_slug']);
+            }
+            return $result;
+		}
+	}
+    public function get_comments_count(){
+		return $this->db->count_all_results($this->table_comments);
+	}
 }

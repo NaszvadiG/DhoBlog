@@ -21,7 +21,6 @@ class Pages extends Backend {
         );
         $this->load->library('slug');
         $this->slug->set_config($page_config);
-        $this->load->helper('datetime');
     }
     public function index(){
         $data['title']="All Pages";
