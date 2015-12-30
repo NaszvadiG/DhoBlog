@@ -11,7 +11,7 @@
        <div class="col-md-12">
             <div class="table-responsive">
                 <div class="table-responsive">
-                <table class="table table-striped table-bordered table-hover" id="categories">
+                <table class="table table-striped table-hover" id="categories">
                     <thead>
                         <tr>
                             <th class="text-center"><input  type="checkbox" name="" id="select_all"></th>

@@ -21,7 +21,6 @@ class Posts extends Backend {
         );
         $this->load->library('slug');
         $this->slug->set_config($post_config);
-        $this->load->helper('datetime');
     }
     public function index(){
         $data['title']="All Posts";

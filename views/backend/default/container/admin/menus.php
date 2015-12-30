@@ -10,7 +10,7 @@
   <div class="row">
        <div class="col-md-12">
             <div class="table-responsive">
-                <table class="table table-striped table-bordered table-hover" id="posts">
+                <table class="table table-striped table-hover" id="posts">
                     <thead>
                         <tr>
                             <th class="text-center"><input  type="checkbox" name="" id="select_all"></th>
