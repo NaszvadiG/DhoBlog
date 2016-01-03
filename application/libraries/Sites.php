@@ -12,27 +12,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Sites {
     public function __construct(){
 		$this->CI =& get_instance();
-        $this->CI->load->helper("file");
+        $this->CI->load->helper(array("file","domain"));
 	}
-    public function get_domain($url){
-        $host = @parse_url($url, PHP_URL_HOST);
-        if (!$host){
-            $host = $url;
-        }
-        if (substr($host, 0, 4) == "www."){
-            $host = substr($host, 4);
-        }
-        if (strlen($host) > 50){
-            $host = substr($host, 0, 47) . '...';
-        }
-        return $host;
-    }
-    public function get_subdomain($url){
-        $domain=$this->get_domain($url);
-        preg_match('/([^\.]+)\.[^\.]+\.[^\.]+$/', $domain, $rgMatches);
-        $sDomain = count($rgMatches)?$rgMatches[1]:null;
-        return $sDomain;
-    }
     function create_site_dir($site_id){
         $path = FCPATH."/files/".$site_id;
 
@@ -61,7 +42,7 @@ class Sites {
         return $sites;
     }
     function get_site($url){
-        $domain=$this->get_domain($url);
+        $domain=get_domain($url);
         return $this->CI->sites_model->get_site($domain);
     }
     public function get_site_settings(){
@@ -77,7 +58,7 @@ class Sites {
         $this->CI->admin_email=$settings['admin_email'];
         $this->CI->default_category=$settings['default_category'];
         $this->CI->default_allow_comments=$settings['default_allow_comments'];
-        $this->CI->post_per_page=$settings['post_per_page'];
+        $this->CI->posts_per_page=$settings['posts_per_page'];
         $this->CI->blog_offline=$settings['blog_offline'];
         $this->CI->offline_reason=$settings['offline_reason'];
         $this->CI->date_format=$settings['date_format'];
@@ -90,7 +71,6 @@ class Sites {
         $this->CI->comments_registration=$settings['comments_registration'];
         $this->CI->default_role=$settings['default_role'];
         $this->CI->timezone=$settings['timezone'];
-        $this->CI->posts_per_page=$settings['posts_per_page'];
         $this->CI->feed_show_count=$settings['feed_show_count'];
         $this->CI->feed_use_excerpt=$settings['feed_use_excerpt'];
         $this->CI->search_engine_visibility=$settings['search_engine_visibility'];

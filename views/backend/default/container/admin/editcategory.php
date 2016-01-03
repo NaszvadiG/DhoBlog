@@ -1,3 +1,6 @@
+<?php
+defined('BASEPATH') OR exit('No direct script access allowed');
+?>
 <div class="col-md-9">
   <div class="page-header">
     <h2 class="pull-left">Edit Category</h2>

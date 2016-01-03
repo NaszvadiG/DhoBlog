@@ -57,7 +57,7 @@ $config['use_subdomain']='false';
 | Your domain in current site
 |
 */
-$config['domain_current_site']='dhoblog.local';
+$config['domain_current_site']='%DOMAIN%';
 
 /*
 |--------------------------------------------------------------------------

@@ -13,7 +13,7 @@ class Users_model extends CI_Model {
 
     public function __construct(){
         parent::__construct();
-        $this->load->library('passwords');
+        $this->load->helper('passwords');
     }
 
     public function user_login(){

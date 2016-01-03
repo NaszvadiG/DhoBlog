@@ -79,7 +79,7 @@ $route['dashboard/newmenu']= 'backend/menus/newmenu';
 $route['dashboard/editmenu/(:num)']= 'backend/menus/editmenu/$1';
 $route['dashboard/deletemenu/(:num)']= 'backend/menus/deletemenu/$1';
 
-$route['dashboard/comments']= 'backend/comments/index'; 
+$route['dashboard/comments']= 'backend/comments/index';
 $route['dashboard/backend']= 'backend/backendthemes/index';
 $route['dashboard/frontend']= 'backend/frontendthemes/index';
 $route['dashboard/general']= 'backend/general/index';

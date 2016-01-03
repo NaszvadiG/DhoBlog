@@ -1,3 +1,6 @@
+<?php
+defined('BASEPATH') OR exit('No direct script access allowed');
+?>
 <div class="sidebar-module">
     <h4>Categories</h4>
     <ol class="list-unstyled">

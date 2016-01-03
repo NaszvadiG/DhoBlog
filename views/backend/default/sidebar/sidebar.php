@@ -1,4 +1,7 @@
-    <div class="col-md-3">
+<?php
+    defined('BASEPATH') OR exit('No direct script access allowed');
+?>
+<div class="col-md-3">
     <div class="sidebarpadding">
         <div class="panel panel-default">
             <div class="panel-heading">
