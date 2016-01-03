@@ -1,4 +1,6 @@
 <?php
+defined('BASEPATH') OR exit('No direct script access allowed');
+
 $info=array(
     "name"=>"Default",
     "description"=>"Default frontend theme for dhoBlog",

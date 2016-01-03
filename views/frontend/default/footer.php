@@ -1,3 +1,6 @@
+<?php
+defined('BASEPATH') OR exit('No direct script access allowed');
+?>
 </div>
 <footer class="footer-padding">
         <div class="row">

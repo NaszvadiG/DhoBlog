@@ -24,7 +24,7 @@ class Dhoblog extends CI_Controller{
     public $admin_email;
     public $default_category;
     public $default_allow_comments;
-    public $post_per_page;
+    public $posts_per_page;
     public $blog_offline;
     public $offline_reason;
     public $date_format;
@@ -37,7 +37,6 @@ class Dhoblog extends CI_Controller{
     public $comments_registration;
     public $default_role;
     public $timezone;
-    public $posts_per_page;
     public $feed_show_count;
     public $feed_use_excerpt;
     public $search_engine_visibility;
@@ -67,12 +66,17 @@ class Dhoblog extends CI_Controller{
         parent::__construct();
         $this->load->database();
 
+        if(!$this->db->initialize()){
+           echo "Oops! We can't establish a database connection!";
+           exit;
+        }
+
         $this->config->load('dhoblog', TRUE);
         $this->dhoblog_config=$this->config->item('dhoblog');
 
         $this->load->model(array('categories_model','posts_model','menus_model','pages_model','users_model','sites_model'));
         $this->load->library(array('themes','pagination','permalinks','form_validation','sites'));
-        $this->load->helper('url','permissions','datetime');
+        $this->load->helper('url','permissions','datetime','domain');
 
         $this->output->set_header('X-XSS-Protection: 1; mode=block');
 		$this->output->set_header('X-Frame-Options: DENY');
@@ -117,18 +121,18 @@ class Dhoblog extends CI_Controller{
                 $this->data['reason']="Reason: Un-natural posting!";
                 $this->data['container']="error/status";
 		        $this->themes->load($this->data);
-                return;
+                exit;
             }elseif($this->blog_status=="deleted"){
                 $this->data['title']="Site Deleted!";
                 $this->data['status']="This site has been deleted!";
                 $this->data['reason']="Reason: TOS Violation!";
                 $this->data['container']="error/status";
 		        $this->themes->load($this->data);
-                return;
+                exit;
             }
             date_default_timezone_set($this->timezone);
         }else{
-            $new=$this->sites->get_subdomain(base_url());
+            $new=get_subdomain(base_url());
             redirect('http://'.$this->dhoblog_config['domain_current_site'].'/user/register?new='.$new);
         }
     }
