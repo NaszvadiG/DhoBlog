@@ -64,8 +64,13 @@ class Dhoblog extends CI_Controller{
 
     public function __construct(){
         parent::__construct();
-        $this->load->database();
 
+        if (!file_exists(APPPATH.'controllers/install/lock')){
+    		header('Location: install');
+            exit;
+    	}
+
+        $this->load->database();
         if(!$this->db->initialize()){
            echo "Oops! We can't establish a database connection!";
            exit;
@@ -141,10 +146,10 @@ class Frontend extends Dhoblog {
      public function __construct(){
         parent::__construct();
 
-        $this->data['blog_title']="Dhoblog";
-        $this->data['blog_tagline']="Just Another DhoBlog Site!";
-        $this->data['blog_description']="dhoBlog is a free and open source blogging platform built using the CodeIgniter PHP framework.";
-        $this->data['blog_keywords']="dhoblog, free blog";
+        $this->data['blog_title']=$this->blog_title;
+        $this->data['blog_tagline']=$this->blog_tagline;
+        $this->data['blog_description']=$this->blog_description;
+        $this->data['blog_keywords']=$this->blog_keywords;
         $this->data['categories']=$this->categories_model->get_categories();
         $this->data['menus']=$this->menus_model->get_menus();
         $this->data['is_home']=($this->router->fetch_class() === 'blog' && $this->router->fetch_method() === 'index') ? true : false;

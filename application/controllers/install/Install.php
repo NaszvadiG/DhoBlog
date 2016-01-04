@@ -14,8 +14,13 @@ class Install extends CI_Controller{
     public function __construct(){
         parent::__construct();
 
-        $this->load->helper(array('form', 'url','domain','install','passwords'));
+        $this->load->helper(array('form', 'url','domain','install','passwords','permissions'));
         $this->load->library(array('form_validation'));
+
+        if (file_exists(APPPATH.'controllers/install/lock')){
+    		redirect(base_url());
+            exit;
+    	}
     }
     public function index(){
         $step=$this->input->get('step');
@@ -104,7 +109,7 @@ class Install extends CI_Controller{
             $this->load->view('install/footer');
         }elseif($step=="finish"){
             $data['title']="Finish";
-
+            write_install_lock();
             $this->load->view('install/header',$data);
             $this->load->view('install/finish',$data);
             $this->load->view('install/footer');

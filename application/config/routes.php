@@ -53,6 +53,7 @@ $route['default_controller'] = 'blog';
 $route['404_override'] = 'error/error_404';
 $route['translate_uri_dashes'] = FALSE;
 
+$route['install']='install/install/index';
 $route['dashboard']= 'backend/dashboard/index';
 
 $route['dashboard/posts/(:num)']= 'backend/posts/index/$1';

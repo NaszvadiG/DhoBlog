@@ -53,12 +53,12 @@ if ( ! function_exists('write_dhoblog_config')){
 
 	}
 }
-if ( ! function_exists('is_installed')){
-    function is_installed(){
-    	if (file_exists(APPPATH.'config/config.php') && file_exists(APPPATH.'config/database.php')){
-    		return TRUE;
-    	}else{
-    		return FALSE;
-    	}
-    }
+if ( ! function_exists('write_install_lock')){
+    function write_install_lock() {
+		$output_path 	= APPPATH.'controllers/install/lock';
+
+        $handle = fopen($output_path,'w+');
+        @chmod($output_path,0777);
+        fwrite($handle,'installed');
+	}
 }

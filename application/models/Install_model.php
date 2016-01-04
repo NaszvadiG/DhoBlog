@@ -119,7 +119,7 @@ class Install_model extends CI_Model {
 
         $this->dbforge->add_field("setting_id bigint(20) NOT NULL AUTO_INCREMENT");
         $this->dbforge->add_field("setting_name varchar(255) NOT NULL");
-        $this->dbforge->add_field("setting_value varchar(255) NULL");
+        $this->dbforge->add_field("setting_value longtext NULL");
         $this->dbforge->add_field("PRIMARY KEY (setting_id)");
         $attributes = array('ENGINE' => 'MyISAM');
         $this->dbforge->create_table('settings', TRUE, $attributes);
@@ -127,7 +127,7 @@ class Install_model extends CI_Model {
         $this->dbforge->add_field("site_meta_id bigint(20) NOT NULL AUTO_INCREMENT");
         $this->dbforge->add_field("site_id bigint(20) NOT NULL");
         $this->dbforge->add_field("site_meta_name varchar(255) NOT NULL");
-        $this->dbforge->add_field("site_meta_value varchar(255) NULL");
+        $this->dbforge->add_field("site_meta_value longtext NULL");
         $this->dbforge->add_field("PRIMARY KEY (site_meta_id)");
         $attributes = array('ENGINE' => 'MyISAM');
         $this->dbforge->create_table('sitemeta', TRUE, $attributes);
@@ -156,7 +156,7 @@ class Install_model extends CI_Model {
         $this->dbforge->add_field("user_meta_id bigint(20) NOT NULL AUTO_INCREMENT");
         $this->dbforge->add_field("user_id bigint(20) NOT NULL");
         $this->dbforge->add_field("user_meta_name varchar(255) NOT NULL");
-        $this->dbforge->add_field("user_meta_value varchar(255) NOT NULL");
+        $this->dbforge->add_field("user_meta_value longtext NULL");
         $this->dbforge->add_field("PRIMARY KEY (user_meta_id)");
         $attributes = array('ENGINE' => 'MyISAM');
         $this->dbforge->create_table('usermeta', TRUE, $attributes);
@@ -353,7 +353,11 @@ class Install_model extends CI_Model {
     		),
     		array(
     				'setting_name' => 'search_engine_visibility',
-    				'setting_value' => 1
+    				'setting_value' => 1,
+    		),
+            array(
+    				'setting_name' => 'permissions',
+    				'setting_value' => serialize(get_default_permissions())
     		)
         );
         $this->db->insert_batch('settings', $settings);
@@ -417,6 +421,13 @@ class Install_model extends CI_Model {
         );
         $this->db->insert_batch('sitemeta', $site_meta);
 
+        $site = array(
+			'site_id' => 1,
+			'site_domain' => get_domain(base_url()),
+			'site_status'  => 'enabled'
+		);
+	    $this->db->insert('sites', $site);
+
         $user_meta = array(
             array(
                     'user_id'=> 1,
@@ -457,5 +468,12 @@ class Install_model extends CI_Model {
             'user_status' => 'active'
         );
         $this->db->insert('users', $user_data);
+
+        $bloguser = array(
+            'blog_id' => 1,
+            'user_id' => 1,
+            'bloguser_capability' => 'administrator'
+        );
+        $this->db->insert('blogusers', $bloguser);
     }
 }
